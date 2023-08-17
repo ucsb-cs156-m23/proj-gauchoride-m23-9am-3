@@ -95,12 +95,13 @@ public class ShiftController extends ApiController {
     @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DRIVER')")
     @DeleteMapping("")
     public Object deleteShift(
-            @Parameter(name="id") @RequestParam Long id) throws AccessDeniedException {
+            @Parameter(name="id") @RequestParam Long id,
+            @Parameter(name="driverID") @RequestParam Long driverID) throws AccessDeniedException {
         Shift shift = shiftRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Shift.class, id));
         
         if (getCurrentUser().getRoles().contains(new SimpleGrantedAuthority("ROLE_DRIVER"))) {
-            if (getCurrentUser().getUser().getId() != shift.getDriverID()) {
+            if (driverID != shift.getDriverID()) {
                 throw new AccessDeniedException("You do not have permission to delete this shift");
             }
         }
@@ -115,13 +116,14 @@ public class ShiftController extends ApiController {
     @PutMapping("")
     public Shift updateShifts(
             @Parameter(name="id") @RequestParam Long id,
+            @Parameter(name="driverID") @RequestParam Long driverID,
             @RequestBody @Valid Shift incoming) throws AccessDeniedException{
         
         Shift shift = shiftRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Shift.class, id));
         
         if (getCurrentUser().getRoles().contains(new SimpleGrantedAuthority("ROLE_DRIVER"))) {
-            if (getCurrentUser().getUser().getId() != shift.getDriverID()) {
+            if (driverID != shift.getDriverID()) {
                 throw new AccessDeniedException("You do not have permission to update this shift");
             }
         }

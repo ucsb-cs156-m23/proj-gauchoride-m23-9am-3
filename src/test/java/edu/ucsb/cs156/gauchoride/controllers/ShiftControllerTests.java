@@ -631,7 +631,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                         .driverID(userId)
                         .day("Monday")
                         .shiftStart("10:00AM")
-                        .shiftEnd("!2:00PM")
+                        .shiftEnd("12:00PM")
                         .driverBackupID(1)
                         .build();
                 
