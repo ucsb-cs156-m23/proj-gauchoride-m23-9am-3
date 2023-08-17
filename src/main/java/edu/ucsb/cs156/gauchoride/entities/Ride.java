@@ -33,8 +33,10 @@ public class Ride {
   private String endTime; // format: HH:MM(A/P)M e.g. "11:00AM" or "1:37PM"
 
   private String pickupLocation;
+  private String pickupRoom;      //ADDED
   private String dropoffLocation;
-  
-  private String room;
+  private String dropoffRoom;     //MODIFIED
+
+  private String notes;           //ADDED
   private String course; // e.g. CMPSC 156
 }
