@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-m23/proj-gauchoride-m23-9am-3
 owner: ucsb-cs156-m23
 repo_name: proj-gauchoride-m23-9am-3
-pull_requests: []
+pull_requests: [{"author":{"id":"U_kgDOBXuuuQ","is_bot":false,"login":"Danny-You","name":""},"headRefName":"Danny-Swagger-Update","number":19,"title":"dy - update swagger csrf setting in application.properties","url":"https://github.com/ucsb-cs156-m23/proj-gauchoride-m23-9am-3/pull/19"}]
