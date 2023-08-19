@@ -68,6 +68,13 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
               }
               {
                 hasRole(currentUser, "ROLE_ADMIN") && (
+                  <NavDropdown title="Driver" id="appnavbar-driver-dropdown" data-testid="appnavbar-driver-dropdown" >
+                    <NavDropdown.Item as={Link} to="/drivers">Driver</NavDropdown.Item>
+                  </NavDropdown>
+                )
+              }
+              {
+                hasRole(currentUser, "ROLE_DRIVER") && (
                   <NavDropdown title="Admin" id="appnavbar-admin-dropdown" data-testid="appnavbar-admin-dropdown" >
                     <NavDropdown.Item as={Link} to="/admin/users">Users</NavDropdown.Item>
                   </NavDropdown>
@@ -89,7 +96,13 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 )
               }
             </Nav>
-
+            {
+              currentUser && currentUser.loggedIn && (
+                <>
+                  <NavDropdown.Item as={Link} to="/drivers">Driver</NavDropdown.Item>
+                </>
+              )
+            }
             <Nav className="ml-auto">
               {/* This `nav` component contains all navigation items that show up on the right side */}
               {

@@ -16,6 +16,9 @@ import ShiftPage from "main/pages/ShiftPage";
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
+import DriverRequestCreatePage from "main/pages/Drivers/DriverRequestCreatePage";
+import DriverRequestEditPage from "main/pages/Drivers/DriverRequestEditPage";
+import DriverRequestIndexPage from "main/pages/Drivers/DriverRequestIndexPage";
 
 
 function App() {
@@ -50,6 +53,21 @@ function App() {
         }
         {
           hasRole(currentUser, "ROLE_USER")
+        }
+        {
+        hasRole(currentUser, "ROLE_DRIVER") && (
+            <>
+              <Route exact path="/drivers" element={<DriverRequestIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/drivers/create" element={<DriverRequestCreatePage />} />
+              <Route exact path="/drivers/edit/1" element={<DriverRequestEditPage />} />
+            </>
+          )
         }
         <Route exact path="/*" element={<PageNotFound />} />
 
