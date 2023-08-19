@@ -88,19 +88,19 @@ import javax.validation.Valid;
         @RequestParam String pickupLocation,
 
         @Parameter(name=&quot;pickupRoom&quot;, description=&quot;String, Room number for the pickupLocation&quot;, example=&quot;1160&quot;, required = true)
-        @RequestParam String pickupRoom,    //ADDED
+        @RequestParam String pickupRoom,
 
         @Parameter(name=&quot;dropoffLocation&quot;, description=&quot;String, Location the ride ends&quot;, example=&quot;South Hall&quot;, required = true)
         @RequestParam String dropoffLocation,
 
         @Parameter(name=&quot;dropoffRoom&quot;, description=&quot;String, Room number for the dropoffLocation&quot;, example=&quot;1431&quot;, required = true)
-        @RequestParam String dropoffRoom,   //MODIFIED
+        @RequestParam String dropoffRoom,
 
         @Parameter(name=&quot;course&quot;, description=&quot;String, Course number for the class at the dropoffLocation&quot;, example=&quot;CMPSC 156&quot;, required = true)
         @RequestParam String course,
 
         @Parameter(name=&quot;notes&quot;, description=&quot;String, extra information for the rider&quot;, example=&quot;I'm inside the room specified, unable to move by myself.&quot;, required = true)
-        @RequestParam String notes          //ADDED
+        @RequestParam String notes
         )
         {
 
@@ -171,11 +171,11 @@ import javax.validation.Valid;
 <span class="fc" id="L171">        ride.setStartTime(incoming.getStartTime());</span>
 <span class="fc" id="L172">        ride.setEndTime(incoming.getEndTime());</span>
 <span class="fc" id="L173">        ride.setPickupLocation(incoming.getPickupLocation());</span>
-<span class="fc" id="L174">        ride.setPickupRoom(incoming.getPickupRoom());               //ADDED</span>
+<span class="fc" id="L174">        ride.setPickupRoom(incoming.getPickupRoom());</span>
 <span class="fc" id="L175">        ride.setDropoffLocation(incoming.getDropoffLocation());</span>
-<span class="fc" id="L176">        ride.setDropoffRoom(incoming.getDropoffRoom());             //ADDED</span>
+<span class="fc" id="L176">        ride.setDropoffRoom(incoming.getDropoffRoom());</span>
 <span class="fc" id="L177">        ride.setCourse(incoming.getCourse());</span>
-<span class="fc" id="L178">        ride.setNotes(incoming.getNotes());                         //ADDED</span>
+<span class="fc" id="L178">        ride.setNotes(incoming.getNotes());</span>
 
 <span class="fc" id="L180">        rideRepository.save(ride);</span>
 
