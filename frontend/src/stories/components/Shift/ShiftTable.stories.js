@@ -3,6 +3,8 @@ import React from 'react';
 
 import ShiftTable from "main/components/Shift/ShiftTable";
 import shiftFixtures from 'fixtures/shiftFixtures';
+import { currentUserFixtures } from 'fixtures/currentUserFixtures';
+import { rest } from "msw"
 
 export default {
     title: 'components/Shift/ShiftTable',
@@ -21,10 +23,33 @@ Empty.args = {
     shift: []
 };
 
-export const ThreeShifts = Template.bind({});
+export const ThreeShiftsOrdinaryUser = Template.bind({});
 
-ThreeShifts.args = {
-    shift: shiftFixtures.threeShifts
+ThreeShiftsOrdinaryUser.args = {
+    shift: shiftFixtures.threeShifts,
+    currentUser: currentUserFixtures.userOnly,
+};
+
+export const ThreeShiftsAdminUser = Template.bind({});
+
+ThreeShiftsAdminUser.args = {
+    msw: [
+        rest.delete('/api/shift', (req, res, ctx) => {
+            window.alert("DELETE: " + JSON.stringify(req.url));
+            return res(ctx.status(200),ctx.json({}));
+        }),
+    ]
+};
+
+export const ThreeShiftsDriverUser = Template.bind({});
+
+ThreeShiftsDriverUser.args = {
+    msw: [
+        rest.delete('/api/shift', (req, res, ctx) => {
+            window.alert("DELETE: " + JSON.stringify(req.url));
+            return res(ctx.status(200),ctx.json({}));
+        }),
+    ]
 };
 
 
