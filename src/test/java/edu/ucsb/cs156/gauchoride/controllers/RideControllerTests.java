@@ -820,10 +820,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
-                                .dropoffRoom("1431")                    //MODIFIED
+                                .dropoffRoom("1431")
                                 .pickupLocation("Phelps Hall")
-                                .pickupRoom("1160")                      //ADDED
-                                .notes("A random note")                       //ADDED
+                                .pickupRoom("1160")
+                                .notes("A random note") 
                                 .build();
 
                 Ride ride_edited = Ride.builder()
@@ -877,10 +877,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
-                                .dropoffRoom("1431")                    //MODIFIED
+                                .dropoffRoom("1431")
                                 .pickupLocation("Phelps Hall")
-                                .pickupRoom("1160")                      //ADDED
-                                .notes("A random note")                       //ADDED
+                                .pickupRoom("1160")                     
+                                .notes("A random note")
                                 .build();
 
                 Ride ride_edited = Ride.builder()
@@ -975,10 +975,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
-                                .dropoffRoom("1431")                    //MODIFIED
+                                .dropoffRoom("1431")                   
                                 .pickupLocation("Phelps Hall")
-                                .pickupRoom("1160")                      //ADDED
-                                .notes("A random note")                       //ADDED
+                                .pickupRoom("1160")                     
+                                .notes("A random note")                      
                                 .build();
 
                 Ride ride_edited = Ride.builder()
@@ -1031,10 +1031,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
-                                .dropoffRoom("1431")                    //MODIFIED
+                                .dropoffRoom("1431")                  
                                 .pickupLocation("Phelps Hall")
-                                .pickupRoom("1160")                      //ADDED
-                                .notes("A random note")                       //ADDED
+                                .pickupRoom("1160")                     
+                                .notes("A random note")                     
                                 .build();
 
                 Ride ride_edited = Ride.builder()
