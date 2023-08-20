@@ -69,8 +69,6 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                     isInvalid={Boolean(errors.shiftStart)}
                     {...register("shiftStart", { required: true, pattern: time_rgx })}
                     placeholder="Enter time in the format HH:MM AM or PM (e.g. 2:30PM)"
-                    defaultValue={initialContents?.shiftStart}
-                
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.shiftStart && 'Start time is required'}
@@ -87,7 +85,6 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                     isInvalid={Boolean(errors.shiftEnd)}
                     {...register("shiftEnd", { required: true, pattern: time_rgx })}
                     placeholder="Enter time in the format HH:MM AM or PM (e.g. 2:30PM)"
-                    defaultValue={initialContents?.shiftEnd}
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.shiftEnd && 'End time is required'}
@@ -106,7 +103,6 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                         required: "Driver ID is required"
                     })}
                     placeholder="e.g. 123"
-                    defaultValue={initialContents?.driverID}
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.driverID?.message}
@@ -124,7 +120,6 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                         required: "Backup Driver's ID is required"
                     })}
                     placeholder="e.g. 456"
-                    defaultValue={initialContents?.driverBackupID}
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.driverBackupID?.message}

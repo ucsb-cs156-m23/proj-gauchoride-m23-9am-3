@@ -1,10 +1,7 @@
-
 import React from 'react';
-
-import ShiftTable from "main/components/Shift/ShiftTable";
-import shiftFixtures from 'fixtures/shiftFixtures';
+import ShiftTable from 'main/components/Shift/ShiftTable';
+import { shiftFixtures } from 'fixtures/shiftFixtures';
 import { currentUserFixtures } from 'fixtures/currentUserFixtures';
-import { rest } from "msw"
 
 export default {
     title: 'components/Shift/ShiftTable',
@@ -28,28 +25,18 @@ export const ThreeShiftsOrdinaryUser = Template.bind({});
 ThreeShiftsOrdinaryUser.args = {
     shift: shiftFixtures.threeShifts,
     currentUser: currentUserFixtures.userOnly,
-};
+}
 
 export const ThreeShiftsAdminUser = Template.bind({});
 
 ThreeShiftsAdminUser.args = {
-    msw: [
-        rest.delete('/api/shift', (req, res, ctx) => {
-            window.alert("DELETE: " + JSON.stringify(req.url));
-            return res(ctx.status(200),ctx.json({}));
-        }),
-    ]
-};
+    shift: shiftFixtures.threeShifts,
+    currentUser: currentUserFixtures.adminUser,
+}
 
 export const ThreeShiftsDriverUser = Template.bind({});
 
 ThreeShiftsDriverUser.args = {
-    msw: [
-        rest.delete('/api/shift', (req, res, ctx) => {
-            window.alert("DELETE: " + JSON.stringify(req.url));
-            return res(ctx.status(200),ctx.json({}));
-        }),
-    ]
-};
-
-
+    shift: shiftFixtures.threeShifts,
+    currentUser: currentUserFixtures.driverOnly,
+}
