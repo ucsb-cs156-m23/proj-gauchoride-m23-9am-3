@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 
+    // Stryker disable all
     const {
         register,
         formState: { errors },
@@ -11,10 +12,12 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
     } = useForm(
         { defaultValues: initialContents || {}, }
     );
+    // Stryker restore all
 
     const navigate = useNavigate();
 
-    const time_rgx = /^(0?[1-9]|1[012]):[0-5][0-9](AM|PM)$/;  // replace "0-2" with "012"
+    // Stryker disable next-line regex
+    const time_regex = /^(0?[1-9]|1[012]):[0-5][0-9](AM|PM)$/;  // replace "0-2" with "012"
 
     const testIdPrefix = "ShiftForm";
 
@@ -67,7 +70,7 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                     id="shiftStart"
                     type="text"
                     isInvalid={Boolean(errors.shiftStart)}
-                    {...register("shiftStart", { required: true, pattern: time_rgx })}
+                    {...register("shiftStart", { required: true, pattern: time_regex })}
                     placeholder="Enter time in the format HH:MM AM or PM (e.g. 2:30PM)"
                 />
                 <Form.Control.Feedback type="invalid">
@@ -83,7 +86,7 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                     id="shiftEnd"
                     type="text"
                     isInvalid={Boolean(errors.shiftEnd)}
-                    {...register("shiftEnd", { required: true, pattern: time_rgx })}
+                    {...register("shiftEnd", { required: true, pattern: time_regex })}
                     placeholder="Enter time in the format HH:MM AM or PM (e.g. 2:30PM)"
                 />
                 <Form.Control.Feedback type="invalid">

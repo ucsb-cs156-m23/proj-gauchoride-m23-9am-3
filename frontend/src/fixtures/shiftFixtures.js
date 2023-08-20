@@ -2,12 +2,12 @@ const shiftFixtures = {
     oneShift:
     [
         {
-            "id": 4,
-            "day": "Wednesday",
-            "shiftStart": "12:00PM",
-            "shiftEnd": "3:00PM",
-            "driverID": 4,
-            "driverBackupID": 5
+            "id": 1,
+            "day": "Monday",
+            "shiftStart": "08:00AM",
+            "shiftEnd": "11:00AM",
+            "driverID": 1,
+            "driverBackupID": 3
         }
     ],
 
