@@ -20,4 +20,7 @@ import java.util.Collection;
 public class CurrentUser {
   private User user;
   private Collection<? extends GrantedAuthority> roles;
+  public Long getId() {
+    return user.getId();
+  }
 }

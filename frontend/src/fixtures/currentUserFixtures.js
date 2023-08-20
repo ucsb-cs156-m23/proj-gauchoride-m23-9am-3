@@ -13,7 +13,8 @@ const apiCurrentUserFixtures = {
             "hostedDomain": "ucsb.edu",
             "admin": true,
             "driver": false,
-            "rider": false
+            "rider": false,
+            "cellPhone": "805-000-0000"
         },
         "roles": [
             {
