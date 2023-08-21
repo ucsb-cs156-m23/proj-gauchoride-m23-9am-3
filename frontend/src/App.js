@@ -9,6 +9,10 @@ import RideRequestEditPage from "main/pages/Ride/RideRequestEditPage";
 import RideRequestIndexPage from "main/pages/Ride/RideRequestIndexPage";
 import ShiftPage from "main/pages/ShiftPage";
 
+import ShiftCreatePage from "main/pages/Shift/ShiftCreatePage";
+import ShiftEditPage from "main/pages/Shift/ShiftEditPage";
+import ShiftIndexPage from "main/pages/Shift/ShiftIndexPage";
+
 
 
 
@@ -52,6 +56,21 @@ function App() {
           hasRole(currentUser, "ROLE_USER")
         }
         <Route exact path="/*" element={<PageNotFound />} />
+        {
+          hasRole(currentUser, "ROLE_USER") && (
+            <>
+              <Route exact path="/shift" element={<ShiftIndexPage />} />
+            </>
+          )
+        }
+        {
+          (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_DRIVER")) && (
+            <>
+              <Route exact path="/shift/edit/:id" element={<ShiftEditPage />} />
+              <Route exact path="/shift/create" element={<ShiftCreatePage />} />
+            </>
+          )
+        }
 
       </Routes>
     </BrowserRouter>

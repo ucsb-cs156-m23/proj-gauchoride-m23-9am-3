@@ -76,7 +76,7 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
               {
                 isParticipant(currentUser) && (
                   <NavDropdown title="Shift" id="appnavbar-shift-dropdown" data-testid="appnavbar-shift-dropdown" >
-                    <NavDropdown.Item as={Link} to="/shift/list">Driver shift table</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/shift/list">Driver Shift Table</NavDropdown.Item>
                   </NavDropdown>
                 )
               }
@@ -86,6 +86,13 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                     <NavDropdown.Item data-testid="appnavbar-ride-dropdown-rides" as={Link} to="/ride/">Rides</NavDropdown.Item>
                     { createRideRequest(currentUser) }
                   </NavDropdown>
+                )
+              }
+              {
+                currentUser && currentUser.loggedIn && (
+                  <>
+                    <Nav.Link as={Link} to="/shift">Driver Shifts</Nav.Link>
+                  </>
                 )
               }
             </Nav>

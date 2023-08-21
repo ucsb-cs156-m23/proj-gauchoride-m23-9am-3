@@ -63,3 +63,23 @@ ThreeShiftsAdminUser.parameters = {
         }),
     ],
 }
+
+export const ThreeShiftsDriverUser = Template.bind({});
+
+ThreeShiftsDriverUser.parameters = {
+    msw: [
+        rest.get('/api/currentUser', (_req, res, ctx) => {
+            return res(ctx.json(apiCurrentUserFixtures.driverOnly));
+        }),
+        rest.get('/api/systemInfo', (_req, res, ctx) => {
+            return res(ctx.json(systemInfoFixtures.showingNeither));
+        }),
+        rest.get('/api/shift/all', (_req, res, ctx) => {
+            return res(ctx.json(shiftFixtures.threeShifts));
+        }),
+        rest.delete('/api/shift', (req, res, ctx) => {
+            window.alert("DELETE: " + JSON.stringify(req.url));
+            return res(ctx.status(200),ctx.json({}));
+        }),
+    ],
+}

@@ -24,7 +24,7 @@ export default function ShiftEditPage({storybook=false}) {
         url: "/api/shift",
         method: "PUT",
         params: {
-            id: shift.id,
+            id: shift.id
         },
         data: {
             day: shift.day,

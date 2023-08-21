@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor, screen, queries } from "@testing-library/react";
+import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import ShiftIndexPage from "main/pages/Shift/ShiftIndexPage";
@@ -107,7 +107,11 @@ describe("ShiftIndexPage tests", () => {
         expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
         expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
 
-        expect(screen.queryByText(/Create Shift/)).not.toBeInTheDocument();
+        const createButton = screen.queryByText("Create Shift");
+        expect(createButton).not.toBeInTheDocument();
+
+        expect(screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`)).not.toBeInTheDocument();
+        expect(screen.queryByTestId(`${testId}-cell-row-0-col-Edit-button`)).not.toBeInTheDocument();
     });
 
     test("what happens when you click delete, admin" , async () => {
@@ -132,7 +136,8 @@ describe("ShiftIndexPage tests", () => {
 
         fireEvent.click(deleteButton);
 
-        await waitFor(() => { expect(mockToast).toBeCalledWith("Shift with id 1 was deleted") });
+        await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
+        expect(mockToast).toHaveBeenCalledWith("Shift with id 1 was deleted");
     });
 
     test("renders empty table when backend unavailable, user only", async () => {

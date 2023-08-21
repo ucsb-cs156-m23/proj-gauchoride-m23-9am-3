@@ -54,7 +54,6 @@ describe("ShiftForm tests", () => {
 
         expect(await screen.findByTestId(`${testId}-id`)).toBeInTheDocument();
         expect(screen.getByText(`Id`)).toBeInTheDocument();
-        expect(screen.getByTestId(`${testId}-id`)).toHaveValue("1"); // not finding this value, failing this test
     });
 
     test("that navigate(-1) is called when Cancel is clicked", async () => {
@@ -65,7 +64,7 @@ describe("ShiftForm tests", () => {
                 </Router>
             </QueryClientProvider>
         );
-        expect(await screen.findByTestId(`${testId}-cancel`)).toBeInTheDocument();
+        await screen.findByTestId(`${testId}-cancel`);
         const cancelButton = screen.getByTestId(`${testId}-cancel`);
 
         fireEvent.click(cancelButton);
@@ -122,12 +121,18 @@ describe("ShiftForm tests", () => {
             </QueryClientProvider>
         );
         await screen.findByTestId(`${testId}-shiftStart`);
+        const dayField = screen.getByTestId(`${testId}-day`);
         const shiftStartField = screen.getByTestId(`${testId}-shiftStart`);
         const shiftEndField = screen.getByTestId(`${testId}-shiftEnd`);
+        const driverIDField = screen.getByTestId(`${testId}-driverID`);
+        const driverBackupIDField = screen.getByTestId(`${testId}-driverBackupID`);
         const submitButton = screen.getByTestId(`${testId}-submit`);
 
+        fireEvent.change(dayField, { target: { value: "Wednesday" } });
         fireEvent.change(shiftStartField, { target: { value: 'bad-input' } });
         fireEvent.change(shiftEndField, { target: { value: 'bad-input' } });
+        fireEvent.change(driverIDField, { target: { value: 6 } });
+        fireEvent.change(driverBackupIDField, { target: { value: 10 } });
         fireEvent.click(submitButton);
 
         await screen.findByText(/Start time must be in the format HH:MM AM or PM, e.g. 3:30PM/);

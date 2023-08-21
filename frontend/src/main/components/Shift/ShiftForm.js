@@ -17,7 +17,7 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
     const navigate = useNavigate();
 
     // Stryker disable next-line regex
-    const time_regex = /^(0?[1-9]|1[012]):[0-5][0-9](AM|PM)$/;  // replace "0-2" with "012"
+    const time_regex = /^(0?[1-9]|1[0-2]):[0-5][0-9](AM|PM)$/;  // replace "0-2" with "012"
 
     const testIdPrefix = "ShiftForm";
 
@@ -70,12 +70,16 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                     id="shiftStart"
                     type="text"
                     isInvalid={Boolean(errors.shiftStart)}
-                    {...register("shiftStart", { required: true, pattern: time_regex })}
-                    placeholder="Enter time in the format HH:MM AM or PM (e.g. 2:30PM)"
+                    {...register("shiftStart", {
+                        required: "Start time is required",
+                        pattern: {
+                            value: time_regex,
+                            message: "Start time must be in the format HH:MM AM or PM, e.g. 3:30PM"
+                        },
+                    })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.shiftStart && 'Start time is required'}
-                    {errors.shiftStart?.type === 'pattern' && 'Start time must be in the format HH:MM AM or PM, e.g. 3:30PM'}
+                    {errors.shiftStart?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
@@ -86,12 +90,16 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                     id="shiftEnd"
                     type="text"
                     isInvalid={Boolean(errors.shiftEnd)}
-                    {...register("shiftEnd", { required: true, pattern: time_regex })}
-                    placeholder="Enter time in the format HH:MM AM or PM (e.g. 2:30PM)"
+                    {...register("shiftEnd", {
+                        required: "End time is required",
+                        pattern: {
+                            value: time_regex,
+                            message: "End time must be in the format HH:MM AM or PM, e.g. 1:30PM"
+                        },
+                    })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.shiftEnd && 'End time is required'}
-                    {errors.shiftEnd?.type === 'pattern' && 'End time must be in the format HH:MM AM or PM, e.g. 1:30PM'}
+                    {errors.shiftEnd?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 

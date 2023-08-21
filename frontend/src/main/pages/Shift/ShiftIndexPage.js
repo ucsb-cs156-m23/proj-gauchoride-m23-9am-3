@@ -9,6 +9,15 @@ export default function ShiftIndexPage() {
 
     const currentUser = useCurrentUser();
 
+    const { data: shift, error: _error, status: _status } =
+    useBackend(
+        // Stryker disable next line all : don't test internal caching of React Query
+        ["/api/shift/all"],
+        { method: "GET", url: "/api/shift/all" },
+        []
+        // Stryker restore all
+    );
+
     const createButton = () => {
         if (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_DRIVER")) {
             return (
@@ -19,17 +28,9 @@ export default function ShiftIndexPage() {
                 >
                     Create Shift
                 </Button>
-            )
+            );
         }
-    }
-
-    const { data: shift, error: _error, status: _status } =
-        useBackend(
-            // Stryker disable next line all : don't test internal caching of React Query
-            ["/api/shift/all"],
-            { method: "GET", url: "/api/shift/all" },
-            []
-        );
+    };
     
     return (
         <BasicLayout>
