@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>13/13</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -210,7 +210,17 @@
 <a name='L145'></a><a href='#L145'>145</a>
 <a name='L146'></a><a href='#L146'>146</a>
 <a name='L147'></a><a href='#L147'>147</a>
-<a name='L148'></a><a href='#L148'>148</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -220,17 +230,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">63x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">63x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">63x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">63x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -357,12 +376,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
 &nbsp;
 function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 &nbsp;
+    
+    // Stryker disable all
     const {
         register,
         formState: { errors },
@@ -370,15 +392,13 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
     } = useForm(
         { defaultValues: initialContents || {}, }
     );
-&nbsp;
+    // Stryker restore all
+   
     const navigate = useNavigate();
-&nbsp;
-    const time_rgx = /^(0?[1-9]|1[012]):[0-5][0-9](AM|PM)$/;  // replace "0-2" with "012"
 &nbsp;
     const testIdPrefix = "ShiftForm";
 &nbsp;
-    return(
-&nbsp;
+    return (
         &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
 &nbsp;
             {initialContents &amp;&amp; (
@@ -397,93 +417,103 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 &nbsp;
             &lt;Form.Group className="mb-3" &gt;
                 &lt;Form.Label htmlFor="day"&gt;Day of Week&lt;/Form.Label&gt;
-                &lt;Form.Select
+                &lt;Form.Control 
+                    as="select" 
                     data-testid={testIdPrefix + "-day"}
                     id="day"
                     isInvalid={Boolean(errors.day)}
                     {...register("day", {
-                        required: "Day is required",
+                        required: "Day is required."
                     })}
                 &gt;
-                &lt;option value=""&gt;Select a Day&lt;/option&gt;
-                &lt;option value="Monday"&gt;Monday&lt;/option&gt;
-                &lt;option value="Tuesday"&gt;Tuesday&lt;/option&gt;
-                &lt;option value="Wednesday"&gt;Wednesday&lt;/option&gt;
-                &lt;option value="Thursday"&gt;Thursday&lt;/option&gt;
-                &lt;option value="Friday"&gt;Friday&lt;/option&gt;
-                &lt;option value="Saturday"&gt;Saturday&lt;/option&gt;
-                &lt;option value="Sunday"&gt;Sunday&lt;/option&gt;
-                &lt;/Form.Select&gt;
+                    &lt;option value=""&gt;Select a day&lt;/option&gt;
+                    &lt;option value="Monday"&gt;Monday&lt;/option&gt;
+                    &lt;option value="Tuesday"&gt;Tuesday&lt;/option&gt;
+                    &lt;option value="Wednesday"&gt;Wednesday&lt;/option&gt;
+                    &lt;option value="Thursday"&gt;Thursday&lt;/option&gt;
+                    &lt;option value="Friday"&gt;Friday&lt;/option&gt;
+                    &lt;option value="Saturday"&gt;Saturday&lt;/option&gt;
+                    &lt;option value="Sunday"&gt;Sunday&lt;/option&gt;
+                &lt;/Form.Control&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
                     {errors.day?.message}
                 &lt;/Form.Control.Feedback&gt;
             &lt;/Form.Group&gt;
 &nbsp;
-            &lt;Form.Group className="mb-3" &gt;
+            &lt;Form.Group className="mb-3"&gt;
                 &lt;Form.Label htmlFor="shiftStart"&gt;Start Time&lt;/Form.Label&gt;
-                &lt;Form.Control 
+                &lt;Form.Control
                     data-testid={testIdPrefix + "-shiftStart"}
                     id="shiftStart"
                     type="text"
+                    placeholder="HH:MMAM/PM e.g. 3:30PM"
                     isInvalid={Boolean(errors.shiftStart)}
-                    {...register("shiftStart", { required: true, pattern: time_rgx })}
-                    placeholder="Enter time in the format HH:MM AM or PM (e.g. 2:30PM)"
+                    {...register("shiftStart", {
+                        required: "Start time is required.",
+                        pattern: {
+                            value: /^(0[0-9]|1[0-2]):[0-5][0-9](AM|PM)$/,
+                            message: "Start time needs to be in HH:MM AM or PM format."
+                        }
+                    })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
-                    {errors.shiftStart &amp;&amp; 'Start time is required'}
-                    {errors.shiftStart?.type === 'pattern' &amp;&amp; 'Start time must be in the format HH:MM AM or PM, e.g. 3:30PM'}
+                    {errors.shiftStart?.message}
                 &lt;/Form.Control.Feedback&gt;
             &lt;/Form.Group&gt;
 &nbsp;
-            &lt;Form.Group className="mb-3" &gt;
+            &lt;Form.Group className="mb-3"&gt;
                 &lt;Form.Label htmlFor="shiftEnd"&gt;End Time&lt;/Form.Label&gt;
                 &lt;Form.Control
                     data-testid={testIdPrefix + "-shiftEnd"}
                     id="shiftEnd"
                     type="text"
+                    placeholder="HH:MMAM/PM e.g. 2:00PM"
                     isInvalid={Boolean(errors.shiftEnd)}
-                    {...register("shiftEnd", { required: true, pattern: time_rgx })}
-                    placeholder="Enter time in the format HH:MM AM or PM (e.g. 2:30PM)"
+                    {...register("shiftEnd", {
+                        required: "End time is required.",
+                        pattern: {
+                            value: /^(0[0-9]|1[0-2]):[0-5][0-9](AM|PM)$/,
+                            message: "End time needs to be in HH:MM AM or PM format."
+                        }
+                    })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
-                    {errors.shiftEnd &amp;&amp; 'End time is required'}
-                    {errors.shiftEnd?.type === 'pattern' &amp;&amp; 'End time must be in the format HH:MM AM or PM, e.g. 1:30PM'}
+                    {errors.shiftEnd?.message}
                 &lt;/Form.Control.Feedback&gt;
             &lt;/Form.Group&gt;
 &nbsp;
-            &lt;Form.Group className="mb-3" &gt;
+            &lt;Form.Group className="mb-3"&gt;
                 &lt;Form.Label htmlFor="driverID"&gt;Driver ID&lt;/Form.Label&gt;
                 &lt;Form.Control
                     data-testid={testIdPrefix + "-driverID"}
                     id="driverID"
-                    type="text"
+                    type="number"
                     isInvalid={Boolean(errors.driverID)}
                     {...register("driverID", {
-                        required: "Driver ID is required"
+                        required: "Driver ID is required."
                     })}
-                    placeholder="e.g. 123"
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
                     {errors.driverID?.message}
                 &lt;/Form.Control.Feedback&gt;
             &lt;/Form.Group&gt;
 &nbsp;
-            &lt;Form.Group className="mb-3" &gt;
-                &lt;Form.Label htmlFor="driverBackupID"&gt;Backup Driver ID&lt;/Form.Label&gt;
+            &lt;Form.Group className="mb-3"&gt;
+                &lt;Form.Label htmlFor="driverBackupID"&gt;Driver Backup ID&lt;/Form.Label&gt;
                 &lt;Form.Control
                     data-testid={testIdPrefix + "-driverBackupID"}
                     id="driverBackupID"
-                    type="text"
+                    type="number"
                     isInvalid={Boolean(errors.driverBackupID)}
                     {...register("driverBackupID", {
-                        required: "Backup Driver's ID is required"
+                        required: "Backup Driver's ID is required."
                     })}
-                    placeholder="e.g. 456"
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
                     {errors.driverBackupID?.message}
                 &lt;/Form.Control.Feedback&gt;
             &lt;/Form.Group&gt;
+&nbsp;
 &nbsp;
             &lt;Button
                 type="submit"
@@ -491,7 +521,6 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             &gt;
                 {buttonLabel}
             &lt;/Button&gt;
-&nbsp;
             &lt;Button
                 variant="Secondary"
                 onClick={() =&gt; navigate(-1)}
@@ -501,6 +530,7 @@ function ShiftForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             &lt;/Button&gt;
 &nbsp;
         &lt;/Form&gt;
+&nbsp;
     )
 }
 &nbsp;
@@ -511,7 +541,7 @@ export default ShiftForm;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Mon Aug 21 2023 14:02:56 GMT-0700 (Pacific Daylight Time)
+                at Mon Aug 21 2023 14:53:29 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
