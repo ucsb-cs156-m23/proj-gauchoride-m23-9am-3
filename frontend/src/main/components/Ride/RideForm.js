@@ -165,11 +165,11 @@ function RideForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             <Form.Group className="mb-3" >                          
                 <Form.Label htmlFor="dropoffRoom">Drop Off Room #</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-room"}
-                    id="room"
+                    data-testid={testIdPrefix + "-dropoffRoom"}
+                    id="dropoffRoom"
                     type="text"
                     isInvalid={Boolean(errors.room)}
-                    {...register("room", {
+                    {...register("dropoffRoom", {
                         required: "Drop off room number is required."
                     })}
                     placeholder="e.g. 2225"  
