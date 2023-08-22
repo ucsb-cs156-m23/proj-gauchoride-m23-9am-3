@@ -134,7 +134,7 @@ function RideForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                     data-testid={testIdPrefix + "-pickupRoom"}
                     id="pickupRoom"
                     type="text"
-                    isInvalid={Boolean(errors.pickupRoom)}  //POSSIBLE PROBLEM HERE B/C OPTIONALITY
+                    isInvalid={Boolean(errors.pickupRoom)}
                     {...register("pickupRoom")}
                     placeholder="e.g. 1401"  
                     defaultValue="" 
@@ -176,7 +176,7 @@ function RideForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                     defaultValue={initialContents?.dropoffRoom} 
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.room?.message}
+                    {errors.dropoffRoom?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
