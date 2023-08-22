@@ -168,7 +168,7 @@ function RideForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                     data-testid={testIdPrefix + "-dropoffRoom"}
                     id="dropoffRoom"
                     type="text"
-                    isInvalid={Boolean(errors.room)}
+                    isInvalid={Boolean(errors.dropoffRoom)}
                     {...register("dropoffRoom", {
                         required: "Drop off room number is required."
                     })}
