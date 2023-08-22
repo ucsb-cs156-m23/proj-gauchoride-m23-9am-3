@@ -110,15 +110,15 @@ function RideForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                 </Form.Control.Feedback>
             </Form.Group>
             
-            <Form.Group className="mb-3" >
-                <Form.Label htmlFor="pickup">Pick Up Location</Form.Label>
+            <Form.Group className="mb-3" >                          
+                <Form.Label htmlFor="pickup">Pick Up Building</Form.Label>
                 <Form.Control
                     data-testid={testIdPrefix + "-pickup"}
                     id="pickup"
                     type="text"
                     isInvalid={Boolean(errors.pickup)}
                     {...register("pickup", {
-                        required: "Pick Up Location is required."
+                        required: "Pick Up Building is required."
                     })}
                     placeholder="e.g. Anacapa Residence Hall"  
                     defaultValue={initialContents?.pickupLocation} 
@@ -128,15 +128,31 @@ function RideForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                 </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3" >
-                <Form.Label htmlFor="dropoff">Drop Off Location</Form.Label>
+            <Form.Group className="mb-3" >                          
+                <Form.Label htmlFor="pickupRoom">Pick Up Room #</Form.Label>
+                <Form.Control
+                    data-testid={testIdPrefix + "-pickupRoom"}
+                    id="pickupRoom"
+                    type="text"
+                    isInvalid={Boolean(errors.pickupRoom)}  //POSSIBLE PROBLEM HERE B/C OPTIONALITY
+                    {...register("pickupRoom")}
+                    placeholder="e.g. 1401"  
+                    defaultValue="" 
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.pickupRoom?.message}
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >                          
+                <Form.Label htmlFor="dropoff">Drop Off Building</Form.Label>
                 <Form.Control
                     data-testid={testIdPrefix + "-dropoff"}
                     id="dropoff"
                     type="text"
                     isInvalid={Boolean(errors.dropoff)}
                     {...register("dropoff", {
-                        required: "Drop Off Location is required."
+                        required: "Drop Off Building is required."
                     })}
                     placeholder="e.g. Phelps"  
                     defaultValue={initialContents?.dropoffLocation}
@@ -146,18 +162,18 @@ function RideForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                 </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3" >
-                <Form.Label htmlFor="room">Room Number for Dropoff</Form.Label>
+            <Form.Group className="mb-3" >                          
+                <Form.Label htmlFor="dropoffRoom">Drop Off Room #</Form.Label>
                 <Form.Control
                     data-testid={testIdPrefix + "-room"}
                     id="room"
                     type="text"
                     isInvalid={Boolean(errors.room)}
                     {...register("room", {
-                        required: "Room number is required."
+                        required: "Drop off room number is required."
                     })}
                     placeholder="e.g. 2225"  
-                    defaultValue={initialContents?.room} 
+                    defaultValue={initialContents?.dropoffRoom} 
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.room?.message}
@@ -179,6 +195,22 @@ function RideForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.course?.message}
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >                          
+                <Form.Label htmlFor="notes">Notes</Form.Label>
+                <Form.Control
+                    data-testid={testIdPrefix + "-notes"}
+                    id="notes"
+                    type="text"
+                    isInvalid={Boolean(errors.notes)}
+                    {...register("notes")}
+                    placeholder="e.g. I'm inside the room, unable to move by myself."  
+                    defaultValue=""
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.notes?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 

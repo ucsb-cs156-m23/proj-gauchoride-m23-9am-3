@@ -6,10 +6,12 @@ const rideFixtures = {
         "day": "Monday",
         "start": "3:30PM",
         "end": "4:45PM",
-        "pickup": "Cambell",
-        "dropoff": "HSSB",
-        "room": "123",
-        "course": "CMPSC111"    
+        "Pick Up Building": "Cambell",
+        "Pick Up Room #": "1547",
+        "Drop Off Building": "HSSB",
+        "Drop Off Room #": "123",
+        "course": "CMPSC111",
+        "Notes": "random note 1"  
       }
     ],
     threeRidesTable:
@@ -22,9 +24,11 @@ const rideFixtures = {
             "startTime": "5:00PM",
             "endTime": "5:50PM",
             "pickupLocation": "Girvetz",
+            "pickupRoom": "1104",
             "dropoffLocation": "Phelps",
-            "room": "123",
-            "course": "CMPSC64"      
+            "dropoffRoom": "123",
+            "course": "CMPSC64",
+            "notes": "random note 2"      
         },
 
         {
@@ -35,9 +39,11 @@ const rideFixtures = {
             "startTime": "11:00AM",
             "endTime": "11:15AM",
             "pickupLocation": "SRB",
+            "pickupRoom": "",
             "dropoffLocation": "HFH",
-            "room": "123",
-            "course": "CMPSC138"  
+            "dropoffRoom": "123",
+            "course": "CMPSC138",
+            "notes": "random note 3"  
         },
 
         {
@@ -48,9 +54,11 @@ const rideFixtures = {
             "startTime": "4:15PM",
             "endTime": "5:30PM",
             "pickupLocation": "Buchanan",
+            "pickupRoom": "1630",
             "dropoffLocation": "Phelps",
-            "room": "123",
-            "course": "CMPSC156"   
+            "dropoffRoom": "123",
+            "course": "CMPSC156",
+            "notes": "random note 4"   
         },
         
     ],
@@ -61,10 +69,12 @@ const rideFixtures = {
             "day": "Tuesday",
             "start": "5:00PM",
             "end": "5:50PM",
-            "pickup": "Girvetz",
-            "dropoff": "Phelps",
-            "room": "123",
-            "course": "CMPSC64"      
+            "Pick Up Building": "Girvetz",
+            "Pick Up Room #": "1104",
+            "Drop Off Building": "Phelps",
+            "Drop Off Room #": "123",
+            "course": "CMPSC64",
+            "Notes": "random note 2"
         },
 
         {
@@ -72,10 +82,12 @@ const rideFixtures = {
             "day": "Wednesday",
             "start": "11:00AM",
             "end": "11:15AM",
-            "pickup": "SRB",
-            "dropoff": "HFH",
-            "room": "123",
-            "course": "CMPSC138"  
+            "Pick Up Building": "SRB",
+            "Pick Up Room #": "",
+            "Drop Off Building": "HFH",
+            "Drop Off Room #": "123",
+            "course": "CMPSC138",
+            "Notes": "random note 3"
         },
 
         {
@@ -83,10 +95,12 @@ const rideFixtures = {
             "day": "Thursday",
             "start": "4:15PM",
             "end": "5:30PM",
-            "pickup": "Buchanan",
-            "dropoff": "Phelps",
-            "room": "123",
-            "course": "CMPSC156"   
+            "Pick Up Building": "Buchanan",
+            "Pick Up Room #": "1630",
+            "Drop Off Building": "Phelps",
+            "Drop Off Room #": "123",
+            "course": "CMPSC156",
+            "Notes": "random note 4"   
         },
         
     ]
