@@ -137,7 +137,7 @@ describe("ShiftEditPage tests", () => {
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled());
-            expect(mockToast).toBeCalledWith("Shift Updated - id: 5 driverID: 10");
+            expect(mockToast).toBeCalledWith("Shift Updated - id: 5");
             expect(mockNavigate).toBeCalledWith({ "to": "/shift" });
 
             expect(axiosMock.history.put.length).toBe(1);
@@ -189,7 +189,7 @@ describe("ShiftEditPage tests", () => {
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled());
-            expect(mockToast).toBeCalledWith("Shift Updated - id: 5 driverID: 10");
+            expect(mockToast).toBeCalledWith("Shift Updated - id: 5");
             expect(mockNavigate).toBeCalledWith({ "to": "/shift" });
         });
 

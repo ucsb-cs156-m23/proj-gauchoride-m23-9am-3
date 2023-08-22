@@ -4,18 +4,18 @@ import { Navigate, useParams } from 'react-router-dom';
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
-export default function ShiftEditPage({storybook=false}) {
+export default function ShiftEditPage() {
     let { id } = useParams();
 
     const { data: shift, _error, _status } =
-      useBackend(
-        // Stryker disable next-line all : don't test internal caching of Reach Query
+       useBackend(
+        // Stryker disable next-line all: don't test internal caching of React Query
         [`/api/shift?id=${id}`],
-        { // Stryker disable next-line all: GET is the default, so mutating this to "" doesn't introduce a bug
-          method: "GET",
-          url: `/api/shift`,
-          params: {
-              id
+        { // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
+            method: "GET",
+            url: '/api/shift',
+            params: {
+                id
             }
         }
     );
@@ -36,7 +36,7 @@ export default function ShiftEditPage({storybook=false}) {
     });
 
     const onSuccess = (shift) => {
-        toast(`Shift Updated - id: ${shift.id} driverID: ${shift.driverID}`);
+        toast(`Shift Updated - id: ${shift.id}`);
     }
 
     const mutation = useBackendMutation(
@@ -52,7 +52,7 @@ export default function ShiftEditPage({storybook=false}) {
         mutation.mutate(data);
     }
 
-    if (isSuccess && !storybook) {
+    if (isSuccess) {
         return <Navigate to="/shift" />
     }
 
