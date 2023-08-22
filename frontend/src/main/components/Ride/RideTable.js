@@ -59,16 +59,24 @@ export default function RideTable({
             accessor: 'endTime',
         },
         {
-            Header: 'Pick Up',
+            Header: 'Pick Up Building',
             accessor: 'pickupLocation',
         },
         {
-            Header: 'Drop Off',
+            Header: 'Pick Up Room #',
+            accessor: 'pickupRoom',
+        },
+        {
+            Header: 'Drop Off Building',
             accessor: 'dropoffLocation',
         },
         {
-            Header: 'Room #',
-            accessor: 'room',
+            Header: 'Drop Off Room #',
+            accessor: 'dropoffRoom',
+        },
+        {
+            Header: 'Notes',
+            accessor: 'notes',
         }
     ];
 
@@ -98,16 +106,24 @@ export default function RideTable({
             accessor: 'endTime',
         },
         {
-            Header: 'Pick Up',
+            Header: 'Pick Up Building',
             accessor: 'pickupLocation',
         },
         {
-            Header: 'Drop Off',
+            Header: 'Pick Up Room #',
+            accessor: 'pickupRoom',
+        },
+        {
+            Header: 'Drop Off Building',
             accessor: 'dropoffLocation',
         },
         {
-            Header: 'Room #',
-            accessor: 'room',
+            Header: 'Drop Off Room #',
+            accessor: 'dropoffRoom',
+        },
+        {
+            Header: 'Notes',
+            accessor: 'notes',
         }
     ];
 
@@ -137,16 +153,24 @@ export default function RideTable({
             accessor: 'endTime',
         },
         {
-            Header: 'Pick Up',
+            Header: 'Pick Up Building',
             accessor: 'pickupLocation',
         },
         {
-            Header: 'Drop Off',
+            Header: 'Pick Up Room #',
+            accessor: 'pickupRoom',
+        },
+        {
+            Header: 'Drop Off Building',
             accessor: 'dropoffLocation',
         },
         {
-            Header: 'Room #',
-            accessor: 'room',
+            Header: 'Drop Off Room #',
+            accessor: 'dropoffRoom',
+        },
+        {
+            Header: 'Notes',
+            accessor: 'notes',
         }
     ];
 
