@@ -56,22 +56,6 @@ function App() {
           hasRole(currentUser, "ROLE_USER")
         }
         <Route exact path="/*" element={<PageNotFound />} />
-        {
-          (hasRole(currentUser, "ROLE_DRIVER") || hasRole(currentUser, "ROLE_USER")) && (
-            <>
-              <Route exact path="/shift" element={<ShiftIndexPage />} />
-            </>
-          )
-        }
-        {
-          hasRole(currentUser, "ROLE_ADMIN") && (
-            <>
-              <Route exact path="/shift/edit/:id" element={<ShiftEditPage />} />
-              <Route exact path="/shift/create" element={<ShiftCreatePage />} />
-            </>
-          )
-        }
-
       </Routes>
     </BrowserRouter>
   );
