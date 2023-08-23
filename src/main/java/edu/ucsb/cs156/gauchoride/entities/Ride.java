@@ -41,4 +41,5 @@ public class Ride {
   
   private String notes;           
 
+
 }
