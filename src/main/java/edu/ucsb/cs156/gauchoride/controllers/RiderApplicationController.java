@@ -49,7 +49,7 @@ public class RiderApplicationController extends ApiController {
         @Parameter(name="perm_number", description="String, Perm number consisting of 7 characters", example = "1234567", required = true) 
         @RequestParam String perm_number,
 
-        @Parameter(name="description", description="String, Please describe the mobility limitations that cause you to need to use the Gauchoride service. ", example = "1234567", required = true) 
+        @Parameter(name="description", description="String, Please describe the mobility limitations that cause you to need to use the Gauchoride service. ", example = "My legs are broken", required = true) 
         @RequestParam String description
     )
     {
