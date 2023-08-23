@@ -63,7 +63,16 @@ public abstract class ApiController {
 
   @ExceptionHandler({ AccessDeniedException.class })
   @ResponseStatus(HttpStatus.FORBIDDEN)
-  public Object handleAccessDeniedExceptoin(Throwable e) {
+  public Object handleAccessDeniedException(Throwable e) {
+    return Map.of(
+        "type", e.getClass().getSimpleName(),
+        "message", e.getMessage());
+  }
+
+
+  @ExceptionHandler({ IllegalArgumentException.class })
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public Object handleIllegalArgumentException(Throwable e) {
     return Map.of(
         "type", e.getClass().getSimpleName(),
         "message", e.getMessage());
