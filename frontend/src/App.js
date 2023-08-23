@@ -72,6 +72,8 @@ function App() {
           )
         }
 
+        <Route exact path="/privacy" element={<PrivacyPolicy />} />
+
       </Routes>
     </BrowserRouter>
   );
