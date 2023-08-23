@@ -3,6 +3,7 @@ package edu.ucsb.cs156.gauchoride.controllers;
 import edu.ucsb.cs156.gauchoride.repositories.UserRepository;
 import edu.ucsb.cs156.gauchoride.testconfig.TestConfig;
 import edu.ucsb.cs156.gauchoride.ControllerTestCase;
+import edu.ucsb.cs156.gauchoride.entities.Ride;
 import edu.ucsb.cs156.gauchoride.entities.RiderApplication;
 import edu.ucsb.cs156.gauchoride.repositories.RiderApplicationRepository;
 
@@ -41,6 +42,8 @@ public class RiderApplicationControllerTests extends ControllerTestCase {
 
         @MockBean
         UserRepository userRepository;
+
+        // // Authorization test for MEMBER
 
         // Authorization tests for get /api/rider
         @Test
@@ -90,6 +93,7 @@ public class RiderApplicationControllerTests extends ControllerTestCase {
                 mockMvc.perform(post("/api/riderApplicaion/new"))
                                 .andExpect(status().is(403));
         }
+
         @WithMockUser(roles = { "ADMIN" })
         @Test
         public void logged_in_admin_cannot_post() throws Exception {
@@ -102,19 +106,97 @@ public class RiderApplicationControllerTests extends ControllerTestCase {
          public void logged_out_users_cannot_edit() throws Exception {
                  mockMvc.perform(put("/api/riderApplication?id=9"))
                                  .andExpect(status().is(403));
-         }
+        }
+
         @WithMockUser(roles = { "ADMIN" })
         @Test
         public void logged_in_admin_cannot_edit() throws Exception {
-                mockMvc.perform(post("/api/riderApplicaion/new"))
+                mockMvc.perform(put("/api/riderApplication?id=9"))
                                 .andExpect(status().is(403));
         }
 
-        //
-        //ADMIN SPECIFIC AUTHORIZATION TESTS TO BE ADDED
-        //
+        // // Authorization test for ADMIN
 
-        // // Tests with mocks for database actions for MEMBERS
+        // Authorization tests for get /api/rider/admin/all
+        @Test
+         public void logged_out_users_cannot_get_all_Admin() throws Exception {
+                 mockMvc.perform(get("/api/rider/admin/all"))
+                                 .andExpect(status().is(403));
+        }
+
+        @WithMockUser(roles = { "MEMBER" })
+        @Test
+        public void logged_in_members_cannot_get_all_Admin() throws Exception {
+                 mockMvc.perform(get("/api/rider/admin/all"))
+                                 .andExpect(status().is(403));
+        }
+
+        @WithMockUser(roles = { "ADMIN" })
+        @Test
+        public void logged_in_admins_can_get_all_Admin() throws Exception {
+                 mockMvc.perform(get("/api/rider/admin/all"))
+                                 .andExpect(status().is(200));
+         }
+
+        // Authorization tests for get /api/rider/admin/pending
+        @Test
+         public void logged_out_users_cannot_get_pending_applications() throws Exception {
+                 mockMvc.perform(get("/api/rider/admin/pending"))
+                                 .andExpect(status().is(403));
+        }
+
+        @WithMockUser(roles = { "MEMBER" })
+        @Test
+        public void logged_in_members_cannot_get_pending_applications() throws Exception {
+                 mockMvc.perform(get("/api/rider/admin/pending"))
+                                 .andExpect(status().is(403));
+        }
+
+        @WithMockUser(roles = { "ADMIN" })
+        @Test
+        public void logged_in_admins_can_get_pending_applications() throws Exception {
+                mockMvc.perform(get("/api/rider/admin/pending"))
+                                .andExpect(status().is(200));
+        }
+
+        // Authorization tests for get /api/rider/admin?id={}
+        @Test
+        public void logged_out_users_cannot_get_specific_application() throws Exception {
+                mockMvc.perform(get("/api/rider/admin?id=7"))
+                               .andExpect(status().is(403)); 
+        }
+
+        @WithMockUser(roles = { "MEMBER" })
+        @Test
+        public void logged_in_members_cannot_get_specific_application() throws Exception {
+                mockMvc.perform(get("/api/rider/admin?id=7"))
+                                .andExpect(status().is(403));
+        }
+
+        @WithMockUser(roles = { "ADMIN" })
+        @Test
+        public void logged_in_admins_can_get_specific_application() throws Exception {
+                mockMvc.perform(get("/api/rider/admin?id=7"))
+                                .andExpect(status().is(404)); // logged, but no id exists
+        }
+
+         // Authorization tests for put /api/rider/admin
+        @Test
+         public void logged_out_users_cannot_update() throws Exception {
+                 mockMvc.perform(put("/api/rider/admin?id=9"))
+                                 .andExpect(status().is(403));
+        }
+        
+        @WithMockUser(roles = { "MEMBER" })
+        @Test
+        public void logged_in_member_cannot_update() throws Exception {
+                mockMvc.perform(put("/api/rider/admin?id=9"))
+                                .andExpect(status().is(403));
+        }     
+
+
+
+        // // Tests with mocks for database actions for MEMBER
 
         // POST
         @WithMockUser(roles = { "MEMBER" })
@@ -725,5 +807,509 @@ public class RiderApplicationControllerTests extends ControllerTestCase {
         verify(riderApplicationRepository, times(1)).findByIdAndUserId(eq(67L), eq(UserId));
         String responseString = response.getResponse().getContentAsString();
         assertEquals("RiderApplication with \"declined\" status cannot be cancelled", responseString);
+    }
+
+
+    // // Tests with mocks for database actions for ADMIN
+
+    // GET ALL
+    @WithMockUser(roles = { "ADMIN", "MEMBER" })
+    @Test
+    public void test_that_logged_in_admin_can_get_all_applications() throws Exception
+    {
+        Long UserId = currentUserService.getCurrentUser().getUser().getId();
+        Long otherUserId = UserId + 1;
+        String Email_User = currentUserService.getCurrentUser().getUser().getEmail();
+        String Email_otherUser = "random@example.org";
+
+        // Get the current date
+        LocalDate localDate = LocalDate.now();
+        Date currentDate = Date.valueOf(localDate);
+        Date testDate1 = Date.valueOf("2023-03-20");
+        Date testDate2 = Date.valueOf("2023-03-29");
+        Date testDate3 = Date.valueOf("2022-11-16");
+
+        RiderApplication application1 = RiderApplication.builder()
+                        .status("pending")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(null)
+                        .description("My legs are broken")
+                        .notes("")
+                        .build();
+
+        RiderApplication application2 = RiderApplication.builder()
+                        .status("cancelled")
+                        .userId(otherUserId)
+                        .perm_number("3456789")
+                        .email(Email_otherUser)
+                        .created_date(testDate1)
+                        .updated_date(currentDate)
+                        .cancelled_date(currentDate)
+                        .description("")
+                        .notes("")
+                        .build();
+
+        RiderApplication application3 = RiderApplication.builder()
+                        .status("expired")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate3)
+                        .updated_date(testDate3)
+                        .cancelled_date(null)
+                        .description("My legs were broken")
+                        .notes("accepted; will expire on 2023-02-20")
+                        .build();
+        
+        ArrayList<RiderApplication> expectedApplications = new ArrayList<>();
+        expectedApplications.addAll(Arrays.asList(application1, application2, application3));
+
+        when(riderApplicationRepository.findAll()).thenReturn(expectedApplications);
+        // act
+        MvcResult response = mockMvc.perform(get("/api/rider/admin/all"))
+        .andExpect(status().isOk()).andReturn();
+
+        // assert
+        verify(riderApplicationRepository, times(1)).findAll();
+        String expectedJson = mapper.writeValueAsString(expectedApplications);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
+
+    // GET ALL PENDING
+    @WithMockUser(roles = { "ADMIN", "MEMBER" })
+    @Test
+    public void test_that_logged_in_can_get_all_pending_applications_when_they_exist() throws Exception
+    {
+        Long UserId = currentUserService.getCurrentUser().getUser().getId();
+        Long otherUserId = UserId + 1;
+        String Email_User = currentUserService.getCurrentUser().getUser().getEmail();
+        String Email_otherUser = "random@example.org";
+
+        // Get the current date
+        LocalDate localDate = LocalDate.now();
+        Date currentDate = Date.valueOf(localDate);
+        Date testDate1 = Date.valueOf("2023-03-20");
+        Date testDate2 = Date.valueOf("2023-03-29");
+        Date testDate3 = Date.valueOf("2022-11-16");
+
+        RiderApplication application1 = RiderApplication.builder()
+                        .status("pending")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(null)
+                        .description("My legs are broken")
+                        .notes("")
+                        .build();
+
+        RiderApplication application2 = RiderApplication.builder()
+                        .status("pending")
+                        .userId(otherUserId)
+                        .perm_number("3456789")
+                        .email(Email_otherUser)
+                        .created_date(testDate1)
+                        .updated_date(currentDate)
+                        .cancelled_date(null)
+                        .description("")
+                        .notes("")
+                        .build();
+
+        RiderApplication application3 = RiderApplication.builder()
+                        .status("expired")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate3)
+                        .updated_date(testDate3)
+                        .cancelled_date(null)
+                        .description("My legs were broken")
+                        .notes("accepted; will expire on 2023-02-20")
+                        .build();
+        
+        ArrayList<RiderApplication> expectedApplications = new ArrayList<>();
+        expectedApplications.addAll(Arrays.asList(application1, application2));
+
+        when(riderApplicationRepository.findAllByStatus("pending")).thenReturn(expectedApplications);
+        // act
+        MvcResult response = mockMvc.perform(get("/api/rider/admin/pending"))
+                            .andExpect(status().isOk()).andReturn();
+
+        // assert
+        verify(riderApplicationRepository, times(1)).findAllByStatus("pending");
+        String expectedJson = mapper.writeValueAsString(expectedApplications);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
+
+    @WithMockUser(roles = { "ADMIN", "MEMBER" })
+    @Test
+    public void test_that_logged_in_can_get_no_pending_applications_when_they_do_not_exist() throws Exception
+    {
+        Long UserId = currentUserService.getCurrentUser().getUser().getId();
+        Long otherUserId = UserId + 1;
+        String Email_User = currentUserService.getCurrentUser().getUser().getEmail();
+        String Email_otherUser = "random@example.org";
+
+        // Get the current date
+        LocalDate localDate = LocalDate.now();
+        Date currentDate = Date.valueOf(localDate);
+        Date testDate1 = Date.valueOf("2023-03-20");
+        Date testDate2 = Date.valueOf("2023-03-29");
+        Date testDate3 = Date.valueOf("2022-11-16");
+
+        RiderApplication application1 = RiderApplication.builder()
+                        .status("expired")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(null)
+                        .description("My legs are broken")
+                        .notes("")
+                        .build();
+
+        RiderApplication application2 = RiderApplication.builder()
+                        .status("declined")
+                        .userId(otherUserId)
+                        .perm_number("3456789")
+                        .email(Email_otherUser)
+                        .created_date(testDate1)
+                        .updated_date(currentDate)
+                        .cancelled_date(null)
+                        .description("")
+                        .notes("")
+                        .build();
+
+        RiderApplication application3 = RiderApplication.builder()
+                        .status("expired")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate3)
+                        .updated_date(testDate3)
+                        .cancelled_date(null)
+                        .description("My legs were broken")
+                        .notes("accepted; will expire on 2023-02-20")
+                        .build();
+        
+        ArrayList<RiderApplication> expectedApplications = new ArrayList<>();
+
+        when(riderApplicationRepository.findAllByStatus("pending")).thenReturn(expectedApplications);
+        // act
+        MvcResult response = mockMvc.perform(get("/api/rider/admin/pending"))
+                            .andExpect(status().isOk()).andReturn();
+
+        // assert
+        verify(riderApplicationRepository, times(1)).findAllByStatus("pending");
+        String expectedJson = mapper.writeValueAsString(expectedApplications);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
+
+    // GET BY ID
+    @WithMockUser(roles = { "ADMIN", "MEMBER" })
+    @Test
+    public void test_that_logged_in_can_get_by_id_when_id_exists() throws Exception
+    {
+        Long UserId = currentUserService.getCurrentUser().getUser().getId();
+        String Email_User = currentUserService.getCurrentUser().getUser().getEmail();
+
+        // Get the current date
+        LocalDate localDate = LocalDate.now();
+        Date currentDate = Date.valueOf(localDate);
+        Date testDate1 = Date.valueOf("2023-03-20");
+        Date testDate2 = Date.valueOf("2023-03-29");
+
+        RiderApplication application1 = RiderApplication.builder()
+                        .status("expired")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(currentDate)
+                        .description("My legs are broken")
+                        .notes("")
+                        .build();
+        
+        when(riderApplicationRepository.findById(eq(7L))).thenReturn(Optional.of(application1));
+        // act
+        MvcResult response = mockMvc.perform(get("/api/rider/admin?id=7"))
+                            .andExpect(status().isOk()).andReturn();
+
+        // assert
+        verify(riderApplicationRepository, times(1)).findById(eq(7L));
+        String expectedJson = mapper.writeValueAsString(application1);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedJson, responseString);
+    }
+
+    @WithMockUser(roles = { "ADMIN", "MEMBER" })
+    @Test
+    public void test_that_logged_in_admin_cannot_get_by_id_when_id_does_not_exists() throws Exception
+    {
+                
+        when(riderApplicationRepository.findById(eq(7L))).thenReturn(Optional.empty());
+
+        // act
+        MvcResult response = mockMvc.perform(get("/api/rider/admin?id=7"))
+                            .andExpect(status().isNotFound()).andReturn();
+
+        // assert
+        verify(riderApplicationRepository, times(1)).findById(eq(7L));
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("EntityNotFoundException", json.get("type"));
+        assertEquals("RiderApplication with id 7 not found", json.get("message"));
+    }
+
+    // PUT (UPDATE)
+    @WithMockUser(roles = { "ADMIN", "MEMBER" })
+    @Test
+    public void test_that_logged_in_admin_can_update_status_and_notes_when_the_application_exists() throws Exception
+    {
+        Long UserId = currentUserService.getCurrentUser().getUser().getId();
+        String Email_User = currentUserService.getCurrentUser().getUser().getEmail();
+
+        Date testDate1 = Date.valueOf("2023-03-20");
+        Date testDate2 = Date.valueOf("2023-03-29");
+
+        RiderApplication application_original = RiderApplication.builder()
+                        .status("pending")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(null)
+                        .description("My legs are broken")
+                        .notes("")
+                        .build();
+        
+        RiderApplication application_edited = RiderApplication.builder()
+                        .status("accepted")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(null)
+                        .description("My legs are broken")
+                        .notes("Accepted; will expire on 2023-07-17")
+                        .build();
+        
+        String expectedString = mapper.writeValueAsString(application_edited);
+
+        when(riderApplicationRepository.findById(eq(67L))).thenReturn(Optional.of(application_original));
+
+        MvcResult response = mockMvc.perform(
+                        put("/api/rider/admin?id=67&status=accepted&notes=Accepted; will expire on 2023-07-17")
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .characterEncoding("utf-8")
+                                        .with(csrf()))
+                        .andExpect(status().isOk()).andReturn();
+
+        verify(riderApplicationRepository, times(1)).findById(67L);
+        verify(riderApplicationRepository, times(1)).save(application_edited); // should be saved with correct user
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedString, responseString);  
+    }
+
+    @WithMockUser(roles = { "ADMIN", "MEMBER" })
+    @Test
+    public void test_that_logged_in_admin_can_update_status_only_when_the_application_exists() throws Exception
+    {
+        Long UserId = currentUserService.getCurrentUser().getUser().getId();
+        String Email_User = currentUserService.getCurrentUser().getUser().getEmail();
+
+        Date testDate1 = Date.valueOf("2023-03-20");
+        Date testDate2 = Date.valueOf("2023-03-29");
+
+        RiderApplication application_original = RiderApplication.builder()
+                        .status("pending")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(null)
+                        .description("My legs are broken")
+                        .notes("")
+                        .build();
+        
+        RiderApplication application_edited = RiderApplication.builder()
+                        .status("declined")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(null)
+                        .description("My legs are broken")
+                        .notes("")
+                        .build();
+        
+        String expectedString = mapper.writeValueAsString(application_edited);
+
+        when(riderApplicationRepository.findById(eq(67L))).thenReturn(Optional.of(application_original));
+
+        MvcResult response = mockMvc.perform(
+                        put("/api/rider/admin?id=67&status=declined&notes=")
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .characterEncoding("utf-8")
+                                        .with(csrf()))
+                        .andExpect(status().isOk()).andReturn();
+
+        verify(riderApplicationRepository, times(1)).findById(67L);
+        verify(riderApplicationRepository, times(1)).save(application_edited); // should be saved with correct user
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedString, responseString);  
+    }
+
+    @WithMockUser(roles = { "ADMIN", "MEMBER" })
+    @Test
+    public void test_that_logged_in_admin_can_update_notes_only_when_the_application_exists() throws Exception
+    {
+        Long UserId = currentUserService.getCurrentUser().getUser().getId();
+        String Email_User = currentUserService.getCurrentUser().getUser().getEmail();
+
+        Date testDate1 = Date.valueOf("2023-03-20");
+        Date testDate2 = Date.valueOf("2023-03-29");
+
+        RiderApplication application_original = RiderApplication.builder()
+                        .status("pending")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(null)
+                        .description("My legs are broken")
+                        .notes("")
+                        .build();
+        
+        RiderApplication application_edited = RiderApplication.builder()
+                        .status("pending")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(null)
+                        .description("My legs are broken")
+                        .notes("formal medical document is required")
+                        .build();
+        
+        String expectedString = mapper.writeValueAsString(application_edited);
+
+        when(riderApplicationRepository.findById(eq(67L))).thenReturn(Optional.of(application_original));
+
+        MvcResult response = mockMvc.perform(
+                        put("/api/rider/admin?id=67&notes=formal medical document is required&status=")
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .characterEncoding("utf-8")
+                                        .with(csrf()))
+                        .andExpect(status().isOk()).andReturn();
+
+        verify(riderApplicationRepository, times(1)).findById(67L);
+        verify(riderApplicationRepository, times(1)).save(application_edited); // should be saved with correct user
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedString, responseString);  
+    }
+
+    @WithMockUser(roles = { "ADMIN", "MEMBER" })
+    @Test
+    public void test_that_logged_in_admin_can_update_nothing_when_the_application_exists() throws Exception
+    {
+        Long UserId = currentUserService.getCurrentUser().getUser().getId();
+        String Email_User = currentUserService.getCurrentUser().getUser().getEmail();
+
+        Date testDate1 = Date.valueOf("2023-03-20");
+        Date testDate2 = Date.valueOf("2023-03-29");
+
+        RiderApplication application_original = RiderApplication.builder()
+                        .status("pending")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(null)
+                        .description("My legs are broken")
+                        .notes("")
+                        .build();
+        
+        RiderApplication application_edited = RiderApplication.builder()
+                        .status("pending")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(null)
+                        .description("My legs are broken")
+                        .notes("")
+                        .build();
+        
+        String expectedString = mapper.writeValueAsString(application_edited);
+
+        when(riderApplicationRepository.findById(eq(67L))).thenReturn(Optional.of(application_original));
+
+        MvcResult response = mockMvc.perform(
+                        put("/api/rider/admin?id=67&notes=&status=")
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .characterEncoding("utf-8")
+                                        .with(csrf()))
+                        .andExpect(status().isOk()).andReturn();
+
+        verify(riderApplicationRepository, times(1)).findById(67L);
+        verify(riderApplicationRepository, times(1)).save(application_edited); // should be saved with correct user
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedString, responseString);  
+    }
+
+    @WithMockUser(roles = { "ADMIN", "MEMBER" })
+    @Test
+    public void test_that_logged_in_admin_cannot_update_when_the_application_does_not_exist() throws Exception
+    {
+        Long UserId = currentUserService.getCurrentUser().getUser().getId();
+        String Email_User = currentUserService.getCurrentUser().getUser().getEmail();
+
+        Date testDate1 = Date.valueOf("2023-03-20");
+        Date testDate2 = Date.valueOf("2023-03-29");
+     
+        RiderApplication application_edited = RiderApplication.builder()
+                        .status("declined")
+                        .userId(UserId)
+                        .perm_number("9876543")
+                        .email(Email_User)
+                        .created_date(testDate1)
+                        .updated_date(testDate2)
+                        .cancelled_date(null)
+                        .description("My legs are broken")
+                        .notes("formal medical document is required")
+                        .build();
+        
+        String expectedString = mapper.writeValueAsString(application_edited);
+
+        when(riderApplicationRepository.findById(eq(67L))).thenReturn(Optional.empty());
+
+        MvcResult response = mockMvc.perform(
+                        put("/api/rider/admin?id=67&notes=formal medical document is required&status=declined")
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .characterEncoding("utf-8")
+                                        .with(csrf()))
+                        .andExpect(status().isNotFound()).andReturn();
+
+        verify(riderApplicationRepository, times(1)).findById(67L);
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("RiderApplication with id 67 not found", json.get("message")); 
     }
 }

@@ -26,6 +26,8 @@ import javax.validation.Valid;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Tag(name = "Rider Application")
@@ -38,7 +40,8 @@ public class RiderApplicationController extends ApiController {
     RiderApplicationRepository riderApplicationRepository;
     
 
-    //Endpoints for members
+    // // Endpoints for ROLE_MEMBER
+
     @Operation(summary = "Create a new rider application with the current user as the requester")
     @PreAuthorize("hasRole('ROLE_MEMBER')")
     @PostMapping("/riderApplication/new")
@@ -68,7 +71,7 @@ public class RiderApplicationController extends ApiController {
         return savedApplication;
     };
 
-    @Operation(summary = "Get all rider requests owned by the current user")
+    @Operation(summary = "Get all rider applications owned by the current user")
     @PreAuthorize("hasRole('ROLE_MEMBER')")
     @GetMapping("/rider")
     public Iterable<RiderApplication> allApplications()
@@ -159,4 +162,77 @@ public class RiderApplicationController extends ApiController {
             return ResponseEntity.badRequest().body(errorMessage);
         }
     };
+
+
+    // // Endpoints for ROLE_ADMIN
+
+    @Operation(summary = "Get all rider applications")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/rider/admin/all")
+    public Iterable<RiderApplication> allApplicationsAdmin()
+    {
+        Iterable<RiderApplication> applications;
+        applications = riderApplicationRepository.findAll();
+        return applications;
+    };
+
+    @Operation(summary = "Get all pending rider applications")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/rider/admin/pending")
+    public Iterable<RiderApplication> allPendingApplications()
+    {
+        Iterable<RiderApplication> pendingApplications;
+        pendingApplications = riderApplicationRepository.findAllByStatus("pending");
+
+        return pendingApplications;
+    };
+
+    @Operation(summary = "Get a specific rider application")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/rider/admin")
+    public RiderApplication specificApplication(
+                            @Parameter(name="id", description="long, Id of the Application to find", 
+                            required = true)
+                            @RequestParam Long id)
+    {
+        RiderApplication application;
+        application = riderApplicationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(RiderApplication.class, id));
+        return application;
+    };
+
+    @Operation(summary = "Update the status/notes field of an application")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/rider/admin")
+    public RiderApplication updateApplicationAdmin(
+                            @Parameter(name="id", description="long, Id of the Application to be updated", 
+                            required = true)
+                            @RequestParam Long id,
+
+                            @Parameter(name="status", description="String, New Status of the Application", 
+                                        required = false)
+                            @RequestParam String status,
+
+                            @Parameter(name="notes", description="String, Notes to notify the Applicant", 
+                                        required = false)
+                            @RequestParam String notes)
+    {
+        RiderApplication application;
+        application = riderApplicationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(RiderApplication.class, id));
+
+        if (!status.isEmpty())
+        {
+            application.setStatus(status);
+        }
+
+        if (!notes.isEmpty())
+        {
+            application.setNotes(notes);
+        }      
+        
+        riderApplicationRepository.save(application);
+        return application;
+    };
+
 }
