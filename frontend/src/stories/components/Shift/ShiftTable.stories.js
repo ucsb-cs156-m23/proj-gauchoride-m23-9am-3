@@ -28,6 +28,13 @@ ThreeShiftsOrdinaryUser.args = {
     currentUser: currentUserFixtures.userOnly,
 }
 
+export const ThreeShiftsDriverUser = Template.bind({});
+
+ThreeShiftsDriverUser.args = {
+    shift: shiftFixtures.threeShifts,
+    currentUser: currentUserFixtures.driverOnly,
+}
+
 export const ThreeShiftsAdminUser = Template.bind({});
 
 ThreeShiftsAdminUser.args = {
@@ -36,22 +43,6 @@ ThreeShiftsAdminUser.args = {
 }
 
 ThreeShiftsAdminUser.parameters = {
-    msw: [
-        rest.delete('/api/shift', (req, res, ctx) => {
-            window.alert("DELETE: " + JSON.stringify(req.url));
-            return res(ctx.status(200),ctx.json({}));
-        }),
-    ]
-};
-
-export const ThreeShiftsDriverUser = Template.bind({});
-
-ThreeShiftsDriverUser.args = {
-    shift: shiftFixtures.threeShifts,
-    currentUser: currentUserFixtures.driverOnly,
-}
-
-ThreeShiftsDriverUser.parameters = {
     msw: [
         rest.delete('/api/shift', (req, res, ctx) => {
             window.alert("DELETE: " + JSON.stringify(req.url));

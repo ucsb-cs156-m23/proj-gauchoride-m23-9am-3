@@ -77,9 +77,5 @@ ThreeShiftsDriverUser.parameters = {
         rest.get('/api/shift/all', (_req, res, ctx) => {
             return res(ctx.json(shiftFixtures.threeShifts));
         }),
-        rest.delete('/api/shift', (req, res, ctx) => {
-            window.alert("DELETE: " + JSON.stringify(req.url));
-            return res(ctx.status(200),ctx.json({}));
-        }),
     ],
 }

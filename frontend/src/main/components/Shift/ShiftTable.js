@@ -55,7 +55,7 @@ export default function ShiftTable({ shift, currentUser }) {
         }
     ];
 
-    if (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_DRIVER")) {
+    if (hasRole(currentUser, "ROLE_ADMIN")) {
         columns.push(ButtonColumn("Edit", "primary", editCallback, "ShiftTable"));
         columns.push(ButtonColumn("Delete", "danger", deleteCallback, "ShiftTable"));
     }

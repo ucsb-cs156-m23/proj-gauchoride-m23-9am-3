@@ -19,7 +19,7 @@ export default function ShiftIndexPage() {
     );
 
     const createButton = () => {
-        if (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_DRIVER")) {
+        if (hasRole(currentUser, "ROLE_ADMIN")) {
             return (
                 <Button
                     variant="primary"

@@ -70,27 +70,6 @@ describe("ShiftIndexPage tests", () => {
         expect(button).toHaveAttribute("style", "float: right;");
     });
 
-    test("renders with create button for driver user", async () => {
-        setupDriverUser();
-        axiosMock.onGet("/api/shift/all").reply(200, []);
-
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <ShiftIndexPage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-
-        await waitFor(() => {
-            expect(screen.getByText(/Create Shift/)).toBeInTheDocument();
-        });
-
-        const button = screen.getByText(/Create Shift/);
-        expect(button).toHaveAttribute("href", "/shift/create");
-        expect(button).toHaveAttribute("style", "float: right;");
-    });
-
     test("renders empty table when backend unavailable, user only", async () => {
         setupUserOnly();
 
@@ -113,6 +92,29 @@ describe("ShiftIndexPage tests", () => {
 
     test("renders three shifts correctly for regular user", async () => {
         setupUserOnly();
+        axiosMock.onGet("/api/shift/all").reply(200, shiftFixtures.threeShifts);
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <ShiftIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); });
+        expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
+        expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
+
+        const createButton = screen.queryByText("Create Shift");
+        expect(createButton).not.toBeInTheDocument();
+
+        expect(screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`)).not.toBeInTheDocument();
+        expect(screen.queryByTestId(`${testId}-cell-row-0-col-Edit-button`)).not.toBeInTheDocument();
+    });
+
+    test("renders three shifts correctly for driver user", async () => {
+        setupDriverUser();
         axiosMock.onGet("/api/shift/all").reply(200, shiftFixtures.threeShifts);
 
         render(
