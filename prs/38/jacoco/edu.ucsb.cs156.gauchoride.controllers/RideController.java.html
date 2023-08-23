@@ -94,7 +94,7 @@ import javax.validation.Valid;
         @RequestParam String dropoffLocation,
 
         @Parameter(name=&quot;dropoffRoom&quot;, description=&quot;String, Room number for the dropoffLocation&quot;, example=&quot;1431&quot;, required = true)
-        @RequestParam String dropoffRoom,   
+        @RequestParam String dropoffRoom,
 
         @Parameter(name=&quot;course&quot;, description=&quot;String, Course number for the class at the dropoffLocation&quot;, example=&quot;CMPSC 156&quot;, required = true)
         @RequestParam String course,
@@ -176,10 +176,9 @@ import javax.validation.Valid;
 <span class="fc" id="L176">        ride.setDropoffRoom(incoming.getDropoffRoom());             </span>
 <span class="fc" id="L177">        ride.setCourse(incoming.getCourse());</span>
 <span class="fc" id="L178">        ride.setNotes(incoming.getNotes());                         </span>
+<span class="fc" id="L179">        rideRepository.save(ride);</span>
 
-<span class="fc" id="L180">        rideRepository.save(ride);</span>
-
-<span class="fc" id="L182">        return ride;</span>
+<span class="fc" id="L181">        return ride;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
