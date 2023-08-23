@@ -64,7 +64,7 @@ function App() {
           )
         }
         {
-          hasRole(currentUser, "ROLE_ADMIN") && (
+          (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_DRIVER")) && (
             <>
               <Route exact path="/shift/edit/:id" element={<ShiftEditPage />} />
               <Route exact path="/shift/create" element={<ShiftCreatePage />} />
