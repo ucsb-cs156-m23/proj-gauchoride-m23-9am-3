@@ -87,7 +87,7 @@ import javax.validation.Valid;
         @Parameter(name=&quot;pickupLocation&quot;, description=&quot;String, Location the ride starts&quot;, example=&quot;Phelps Hall&quot;, required = true)
         @RequestParam String pickupLocation,
 
-        @Parameter(name=&quot;pickupRoom&quot;, description=&quot;String, Room number for the pickupLocation&quot;, example=&quot;1160&quot;, required = true)
+        @Parameter(name=&quot;pickupRoom&quot;, description=&quot;String, Room number for the pickupLocation&quot;, example=&quot;1160&quot;, required = false)
         @RequestParam String pickupRoom,    
 
         @Parameter(name=&quot;dropoffLocation&quot;, description=&quot;String, Location the ride ends&quot;, example=&quot;South Hall&quot;, required = true)
@@ -99,7 +99,7 @@ import javax.validation.Valid;
         @Parameter(name=&quot;course&quot;, description=&quot;String, Course number for the class at the dropoffLocation&quot;, example=&quot;CMPSC 156&quot;, required = true)
         @RequestParam String course,
 
-        @Parameter(name=&quot;notes&quot;, description=&quot;String, extra information for the rider&quot;, example=&quot;I'm inside the room specified, unable to move by myself.&quot;, required = true)
+        @Parameter(name=&quot;notes&quot;, description=&quot;String, extra information for the rider&quot;, example=&quot;I'm inside the room specified, unable to move by myself.&quot;, required = false)
         @RequestParam String notes          
         )
         {
