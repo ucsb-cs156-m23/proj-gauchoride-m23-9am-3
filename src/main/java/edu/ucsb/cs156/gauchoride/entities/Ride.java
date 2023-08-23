@@ -40,5 +40,4 @@ public class Ride {
   private String course; // e.g. CMPSC 156
   
   private String notes;           
-
 }

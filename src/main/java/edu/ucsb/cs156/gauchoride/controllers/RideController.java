@@ -94,7 +94,7 @@ public class RideController extends ApiController {
         @RequestParam String dropoffLocation,
 
         @Parameter(name="dropoffRoom", description="String, Room number for the dropoffLocation", example="1431", required = true)
-        @RequestParam String dropoffRoom,   
+        @RequestParam String dropoffRoom,
 
         @Parameter(name="course", description="String, Course number for the class at the dropoffLocation", example="CMPSC 156", required = true)
         @RequestParam String course,
@@ -176,7 +176,6 @@ public class RideController extends ApiController {
         ride.setDropoffRoom(incoming.getDropoffRoom());             
         ride.setCourse(incoming.getCourse());
         ride.setNotes(incoming.getNotes());                         
-
         rideRepository.save(ride);
 
         return ride;
