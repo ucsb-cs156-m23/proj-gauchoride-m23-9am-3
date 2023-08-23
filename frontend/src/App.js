@@ -57,7 +57,7 @@ function App() {
         }
         <Route exact path="/*" element={<PageNotFound />} />
         {
-          hasRole(currentUser, "ROLE_USER") && (
+          (hasRole(currentUser, "ROLE_USER") || hasRole(currentUser, "ROLE_DRIVER"))&& (
             <>
               <Route exact path="/shift" element={<ShiftIndexPage />} />
             </>
