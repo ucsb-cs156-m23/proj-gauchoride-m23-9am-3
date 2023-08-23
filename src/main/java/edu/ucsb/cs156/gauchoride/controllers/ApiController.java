@@ -60,12 +60,4 @@ public abstract class ApiController {
         "type", e.getClass().getSimpleName(),
         "message", e.getMessage());
   }
-
-  @ExceptionHandler({ AccessDeniedException.class })
-  @ResponseStatus(HttpStatus.FORBIDDEN)
-  public Object handleAccessDeniedException(Throwable e) {
-    return Map.of(
-        "type", e.getClass().getSimpleName(),
-        "message", e.getMessage());
-  }
 }
