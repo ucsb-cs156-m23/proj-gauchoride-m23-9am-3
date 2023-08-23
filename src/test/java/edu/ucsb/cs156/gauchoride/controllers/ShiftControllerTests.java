@@ -69,11 +69,11 @@ public class ShiftControllerTests extends ControllerTestCase {
                                 .andExpect(status().is(200)); // logged
         }
 
-        // Authorization tests for /api/shift/get?id={}
+        // Authorization tests for /api/shift?id={}
 
         @Test
         public void logged_out_users_cannot_get_by_id() throws Exception {
-                mockMvc.perform(get("/api/shift/get?id=7"))
+                mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().is(403)); // logged out users can't get by id
         }
 
@@ -81,14 +81,14 @@ public class ShiftControllerTests extends ControllerTestCase {
         @WithMockUser(roles = { "DRIVER" })
         @Test
         public void logged_in_driver_can_get_by_id() throws Exception {
-                mockMvc.perform(get("/api/shift/get?id=7"))
+                mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().is(404)); // logged, but no id exists
         }
 
         @WithMockUser(roles = { "ADMIN" })
         @Test
         public void logged_in_admin_can_get_by_id() throws Exception {
-                mockMvc.perform(get("/api/shift/get?id=7"))
+                mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().is(404)); // logged, but no id exists
         }
 
@@ -133,7 +133,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                 when(shiftRepository.findById(eq(7L))).thenReturn(Optional.of(shift));
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/shift/get?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
@@ -153,7 +153,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                 when(shiftRepository.findById(eq(7L))).thenReturn(Optional.empty());
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/shift/get?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().isNotFound()).andReturn();
 
                 // assert
@@ -183,7 +183,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                 when(shiftRepository.findById(eq(7L))).thenReturn(Optional.of(shift));
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/shift/get?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
@@ -213,7 +213,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                 when(shiftRepository.findById(eq(7L))).thenReturn(Optional.of(shift));
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/shift/get?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
@@ -233,7 +233,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                 when(shiftRepository.findById(eq(7L))).thenReturn(Optional.empty());
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/shift/get?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().isNotFound()).andReturn();
 
                 // assert
@@ -253,7 +253,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                 when(shiftRepository.findById(eq(7L))).thenReturn(Optional.empty());
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/shift/get?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().isNotFound()).andReturn();
 
                 // assert
@@ -669,9 +669,10 @@ public class ShiftControllerTests extends ControllerTestCase {
         @Test
         public void driver_cannot_update_other_shifts() throws Exception {
                 // arrange
+                long userId = currentUserService.getCurrentUser().getUser().getId();
 
                 Shift shift_Orig = Shift.builder()
-                        .driverID(123)
+                        .driverID(userId+1)
                         .day("Tuesday")
                         .shiftStart("9:00AM")
                         .shiftEnd("12:00PM")
@@ -679,7 +680,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                         .build();
                 
                 Shift shift_Edited = Shift.builder()
-                        .driverID(123)
+                        .driverID(userId)
                         .day("Wednesday")
                         .shiftStart("1:00PM")
                         .shiftEnd("4:00PM")

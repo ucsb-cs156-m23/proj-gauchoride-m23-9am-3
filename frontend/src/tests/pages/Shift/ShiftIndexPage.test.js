@@ -26,23 +26,23 @@ describe("ShiftIndexPage tests", () => {
 
     const testId = "ShiftTable";
 
-    const setupUserOnly = () => {
+    
+    beforeEach( () => {
         axiosMock.reset();
         axiosMock.resetHistory();
+    });
+
+    const setupUserOnly = () => {
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
     };
 
     const setupAdminUser = () => {
-        axiosMock.reset();
-        axiosMock.resetHistory();
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
     };
 
     const setupDriverUser = () => {
-        axiosMock.reset();
-        axiosMock.resetHistory();
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.driverOnly);
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
     };
@@ -89,6 +89,26 @@ describe("ShiftIndexPage tests", () => {
         const button = screen.getByText(/Create Shift/);
         expect(button).toHaveAttribute("href", "/shift/create");
         expect(button).toHaveAttribute("style", "float: right;");
+    });
+
+    test("renders empty table when backend unavailable, user only", async () => {
+        setupUserOnly();
+
+        axiosMock.onGet("/api/shift/all").timeout();
+
+        const restoreConsole = mockConsole();
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <ShiftIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
+        restoreConsole();
+        expect(screen.queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
     test("renders three shifts correctly for regular user", async () => {
@@ -138,30 +158,6 @@ describe("ShiftIndexPage tests", () => {
 
         await waitFor(() => expect(axiosMock.history.delete.length).toBe(1));
         expect(mockToast).toHaveBeenCalledWith("Shift with id 1 was deleted");
-    });
-
-    test("renders empty table when backend unavailable, user only", async () => {
-        setupUserOnly();
-
-        axiosMock.onGet("/api/shift/all").timeout();
-
-        const restoreConsole = mockConsole();
-
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <ShiftIndexPage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-
-        await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
-
-        // const errorMessage = console.error.mock.calls[0][0]; // TypeError, not sure why this is the case, maybe a problem with console.error
-        console.log(console.error.mock.calls);
-        // expect(errorMessage).toMatch("Error communicating with backend via GET on /api/shift/all");
-        restoreConsole();
-        expect(screen.queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
 });
