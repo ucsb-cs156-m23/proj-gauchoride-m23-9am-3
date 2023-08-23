@@ -87,7 +87,7 @@ public class RideController extends ApiController {
         @Parameter(name="pickupLocation", description="String, Location the ride starts", example="Phelps Hall", required = true)
         @RequestParam String pickupLocation,
 
-        @Parameter(name="pickupRoom", description="String, Room number for the pickupLocation", example="1160", required = true)
+        @Parameter(name="pickupRoom", description="String, Room number for the pickupLocation", example="1160", required = false)
         @RequestParam String pickupRoom,    
 
         @Parameter(name="dropoffLocation", description="String, Location the ride ends", example="South Hall", required = true)
@@ -99,7 +99,7 @@ public class RideController extends ApiController {
         @Parameter(name="course", description="String, Course number for the class at the dropoffLocation", example="CMPSC 156", required = true)
         @RequestParam String course,
 
-        @Parameter(name="notes", description="String, extra information for the rider", example="I'm inside the room specified, unable to move by myself.", required = true)
+        @Parameter(name="notes", description="String, extra information for the rider", example="I'm inside the room specified, unable to move by myself.", required = false)
         @RequestParam String notes          
         )
         {
