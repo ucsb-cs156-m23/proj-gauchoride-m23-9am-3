@@ -3,33 +3,60 @@ import { Row, Col, Modal, Button, Form } from "react-bootstrap";
 import RoleBadge from "main/components/Profile/RoleBadge";
 import { useCurrentUser } from "main/utils/currentUser";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+import {  useBackendMutation } from "main/utils/useBackend";
 
 const ProfilePage = () => {
-
     const { data: currentUser } = useCurrentUser();
     // Stryker disable all
     const [showModal, setShowModal] = useState(false);
-    const [phone, setPhone] = useState(currentUser?.root?.user?.phone || '');
+    const [phone, setPhone] = useState(currentUser?.root?.user?.cellphone || '');
+    const [newPhone, setNewPhone] = useState(currentUser?.root?.user?.cellphone || '');
+
+    console.log("currentUser: ", currentUser)
+    console.log("phone: ", phone)
+    console.log("newPhone: ", newPhone)
+
+    const objectToAxiosPutParams = () => ({
+        url: "/api/userprofile/updatecellphone",
+        method: "PUT",
+        params: {
+            cellphone: newPhone
+        }
+      });
+
+      const onSuccess = (item) => {
+        console.log('User Updated:', item);
+      }
+
+      const mutation = useBackendMutation(
+        objectToAxiosPutParams,
+        { onSuccess },
+        // Stryker disable next-line all : hard to set up test for caching
+        [`/api/currentUser`]
+      );
+      
+    const { isSuccess } = mutation
+
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
     const handleSave = async () => {
-        await fetch('/api/userprofile/updatecellphone', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                cellphone: phone
-            })
-        });
-    // Stryker restore all
-/*         if (response.ok) {
-            const result = await response.json();
-            console.log(result);
+
+        mutation.mutate();
+        // const response = await fetch('/api/userprofile/updatecellphone', {
+        //     method: 'PUT',
+        //     headers: {
+        //         'Content-Type': 'application/x-www-form-urlencoded',
+        //     },
+        //     body: new URLSearchParams({
+        //         cellphone: newPhone
+        //     })
+        // });
+        
+       // Stryker restore all
+         if (isSuccess) {
+            setPhone(newPhone);
             setShowModal(false);
-        } else {
-            console.error('Failed to update cellphone number');
-        } */
+        }
     };    
 
     if (!currentUser.loggedIn) {
@@ -37,6 +64,11 @@ const ProfilePage = () => {
     }
 
     const { email, pictureUrl, fullName } = currentUser.root.user;
+
+    if (currentUser.initialData) {
+        return <p>Loading...</p>;
+    }
+    
     return (
         <BasicLayout>
             <Row className="align-items-center profile-header mb-5 text-center text-md-left">
@@ -72,8 +104,8 @@ const ProfilePage = () => {
                         <Form.Control 
                             id="phoneNumber"
                             type="text" 
-                            value={phone} 
-                            onChange={(e) => setPhone(e.target.value)} 
+                            value={newPhone} 
+                            onChange={(e) => setNewPhone(e.target.value)} 
                             placeholder="Enter new phone number"
                         />
                     </Form.Group>
