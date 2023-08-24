@@ -17,9 +17,6 @@ import ShiftPage from "main/pages/ShiftPage";
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
-import ShiftIndexPage from "main/pages/Shift/ShiftIndexPage";
-import ShiftCreatePage from "main/pages/Shift/ShiftCreatePage";
-import ShiftEditPage from "main/pages/Shift/ShiftEditPage";
 
 
 function App() {
@@ -53,6 +50,9 @@ function App() {
           hasRole(currentUser, "ROLE_RIDER") && <Route exact path="/shift/list" element={<ShiftPage />} />
         }
         {
+          hasRole(currentUser, "ROLE_USER")
+        }
+        {
           (hasRole(currentUser, "ROLE_DRIVER") || hasRole(currentUser, "ROLE_USER")) && (
             <>
               <Route exact path="/shift" element={<ShiftIndexPage />} />
@@ -71,7 +71,6 @@ function App() {
           hasRole(currentUser, "ROLE_USER")
         }
         <Route exact path="/*" element={<PageNotFound />} />
-
         <Route exact path="/privacy" element={<PrivacyPolicy />} />
       </Routes>
     </BrowserRouter>
