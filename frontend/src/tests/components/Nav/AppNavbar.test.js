@@ -1,4 +1,4 @@
-import { screen, render, waitFor, findByTestId} from "@testing-library/react";
+import { screen, render, waitFor} from "@testing-library/react";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
