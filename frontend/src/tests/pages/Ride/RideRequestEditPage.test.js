@@ -80,9 +80,11 @@ describe("RideRequestEditPage tests", () => {
                 startTime: "5:00PM",
                 endTime: "7:30PM", 
                 pickupLocation: "HSSB",
+                pickupRoom: "1203",
                 dropoffLocation: "SRB",
-                room: "125",
-                course: "CMPSC 156"
+                dropoffRoom: "125",
+                course: "CMPSC 156",
+                notes: ""
             });
             axiosMock.onPut('/api/ride_request').reply(200, {
                 id: "17",
@@ -90,9 +92,11 @@ describe("RideRequestEditPage tests", () => {
                 startTime: "3:30PM",
                 endTime: "4:30PM", 
                 pickupLocation: "Phelps",
+                pickupRoom: "2503",
                 dropoffLocation: "HSSB",
-                room: "1215",
-                course: "WRIT 105CD"
+                dropoffRoom: "1215",
+                course: "WRIT 105CD",
+                notes: "Please inform me prior to your arrival."
             });
         });
 
@@ -123,17 +127,21 @@ describe("RideRequestEditPage tests", () => {
             const startTimeField = getByTestId("RideForm-start");
             const endTimeField = getByTestId("RideForm-end");
             const pickupLocationField = getByTestId("RideForm-pickup");
+            const pickupRoomField = getByTestId("RideForm-pickupRoom");
             const dropoffLocationField = getByTestId("RideForm-dropoff");
-            const roomField = getByTestId("RideForm-room");
+            const dropoffRoomField = getByTestId("RideForm-dropoffRoom");
             const courseField = getByTestId("RideForm-course");
+            const notesField = getByTestId("RideForm-notes");
 
             expect(dayField).toHaveValue("Tuesday");
             expect(startTimeField).toHaveValue("5:00PM");
             expect(endTimeField).toHaveValue("7:30PM");
             expect(pickupLocationField).toHaveValue("HSSB");
+            expect(pickupRoomField).toHaveValue("1203");
             expect(dropoffLocationField).toHaveValue("SRB");
-            expect(roomField).toHaveValue("125");
+            expect(dropoffRoomField).toHaveValue("125");
             expect(courseField).toHaveValue("CMPSC 156");
+            expect(notesField).toHaveValue("");
             
         });
 
@@ -155,9 +163,11 @@ describe("RideRequestEditPage tests", () => {
             const startTimeField = getByTestId("RideForm-start");
             const endTimeField = getByTestId("RideForm-end");
             const pickupLocationField = getByTestId("RideForm-pickup");
+            const pickupRoomField = getByTestId("RideForm-pickupRoom");
             const dropoffLocationField = getByTestId("RideForm-dropoff");
-            const roomField = getByTestId("RideForm-room");
+            const dropoffRoomField = getByTestId("RideForm-dropoffRoom");
             const courseField = getByTestId("RideForm-course");
+            const notesField = getByTestId("RideForm-notes");
             const submitButton = getByTestId("RideForm-submit");
 
 
@@ -165,9 +175,11 @@ describe("RideRequestEditPage tests", () => {
             expect(startTimeField).toHaveValue("5:00PM");
             expect(endTimeField).toHaveValue("7:30PM");
             expect(pickupLocationField).toHaveValue("HSSB");
+            expect(pickupRoomField).toHaveValue("1203");
             expect(dropoffLocationField).toHaveValue("SRB");
-            expect(roomField).toHaveValue("125");
+            expect(dropoffRoomField).toHaveValue("125");
             expect(courseField).toHaveValue("CMPSC 156");
+            expect(notesField).toHaveValue("");
 
             expect(submitButton).toBeInTheDocument();
 
@@ -175,10 +187,11 @@ describe("RideRequestEditPage tests", () => {
             fireEvent.change(startTimeField, { target: { value: '3:30PM' } })
             fireEvent.change(endTimeField, { target: { value: "4:30PM" } })
             fireEvent.change(pickupLocationField, { target: { value: 'Phelps' } })
+            fireEvent.change(pickupRoomField, { target: {value: '2503'}})
             fireEvent.change(dropoffLocationField, { target: { value: 'HSSB' } })
-            fireEvent.change(roomField, { target: { value: "1215" } })
+            fireEvent.change(dropoffRoomField, { target: { value: "1215" } })
             fireEvent.change(courseField, { target: { value: "WRIT 105CD" } })
-
+            fireEvent.change(notesField, { target: { value: "Please inform me prior to your arrival." } })
 
             fireEvent.click(submitButton);
 
@@ -194,9 +207,11 @@ describe("RideRequestEditPage tests", () => {
                 startTime: "3:30PM",
                 endTime: "4:30PM", 
                 pickupLocation: "Phelps",
+                pickupRoom: "2503",
                 dropoffLocation: "HSSB",
-                room: "1215",
-                course: "WRIT 105CD"
+                dropoffRoom: "1215",
+                course: "WRIT 105CD",
+                notes: "Please inform me prior to your arrival."
             })); // posted object
 
         });

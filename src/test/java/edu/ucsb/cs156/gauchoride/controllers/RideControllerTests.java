@@ -822,7 +822,7 @@ public class RideControllerTests extends ControllerTestCase {
                                 .dropoffLocation("South Hall")
                                 .dropoffRoom("1431")                    
                                 .pickupLocation("Phelps Hall")
-                                .pickupRoom("1160")                     
+                                .pickupRoom("1160")                      
                                 .notes("A random note")                       
                                 .build();
 
