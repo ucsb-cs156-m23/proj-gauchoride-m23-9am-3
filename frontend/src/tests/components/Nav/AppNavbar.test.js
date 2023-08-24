@@ -109,7 +109,7 @@ describe("AppNavbar tests", () => {
         const currentUser = currentUserFixtures.adminOnly;
         const doLogin = jest.fn();
 
-        const { getByText , getByTestId } = render(
+        const { getByText , getByTestId, findByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} doLogin={doLogin} />
@@ -119,7 +119,14 @@ describe("AppNavbar tests", () => {
         
         await waitFor(() => expect(getByText("Welcome, Phill Conrad")).toBeInTheDocument());
         const shiftMenu = getByTestId("appnavbar-shift-dropdown");
-        expect(shiftMenu).toBeInTheDocument();        
+        expect(shiftMenu).toBeInTheDocument();
+        
+        await findByTestId("appnavbar-shift-dropdown");
+        const dropdown = getByTestId("appnavbar-shift-dropdown");
+        const aElement = dropdown.querySelector("a");
+        expect(aElement).toBeInTheDocument();
+        aElement?.click();
+        await findByTestId(/appnavbar-shift-dropdown-create/);  
     });
 
     test("renders shift table links correctly for driver", async () => {
@@ -127,7 +134,7 @@ describe("AppNavbar tests", () => {
         const currentUser = currentUserFixtures.driverOnly;
         const doLogin = jest.fn();
 
-        const { getByText , getByTestId } = render(
+        const { getByText , getByTestId, findByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} doLogin={doLogin} />
@@ -137,7 +144,7 @@ describe("AppNavbar tests", () => {
         
         await waitFor(() => expect(getByText("Welcome, Phillip Conrad")).toBeInTheDocument());
         const shiftMenu = getByTestId("appnavbar-shift-dropdown");
-        expect(shiftMenu).toBeInTheDocument();        
+        expect(shiftMenu).toBeInTheDocument();
     });
 
     test("renders shift table links correctly for rider", async () => {
@@ -145,7 +152,7 @@ describe("AppNavbar tests", () => {
         const currentUser = currentUserFixtures.riderOnly;
         const doLogin = jest.fn();
 
-        const { getByText , getByTestId } = render(
+        const { getByText , getByTestId, findByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <AppNavbar currentUser={currentUser} doLogin={doLogin} />
@@ -155,7 +162,7 @@ describe("AppNavbar tests", () => {
         
         await waitFor(() => expect(getByText("Welcome, Phillip Conrad")).toBeInTheDocument());
         const shiftMenu = getByTestId("appnavbar-shift-dropdown");
-        expect(shiftMenu).toBeInTheDocument();        
+        expect(shiftMenu).toBeInTheDocument();
     });
 
     test("not render shift table links for regular user", async () => {
@@ -173,7 +180,7 @@ describe("AppNavbar tests", () => {
         
         await waitFor(() => expect(getByText("Welcome, Phillip Conrad")).toBeInTheDocument());
         const shiftMenu = screen.queryByTestId("appnavbar-shift-dropdown");
-        expect(shiftMenu).not.toBeInTheDocument();        
+        expect(shiftMenu).not.toBeInTheDocument();   
     });
 
     // test taken from https://github.com/ucsb-cs156/proj-courses repo
