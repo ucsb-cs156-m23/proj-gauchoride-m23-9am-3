@@ -2,7 +2,7 @@ import { render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import ShiftPage from "main/pages/ShiftPage";
-import shiftFixtures from "fixtures/shiftFixtures";
+import { shiftFixtures } from "fixtures/shiftFixtures";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import mockConsole from "jest-mock-console";
