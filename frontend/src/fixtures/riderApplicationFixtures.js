@@ -24,7 +24,7 @@ const riderApplicationFixtures =
             "email": "cgaucho@ucsb.edu",
             "created_date": "2022-06-23",
             "updated_date": "2022-07-14",
-            "cancelled_date": "2022-07-23",
+            "cancelled_date": "",
             "description": "My leg was broken in a car accident",
             "notes": ""
         },
@@ -35,7 +35,7 @@ const riderApplicationFixtures =
             "email": "dgaucho@ucsb.edu",
             "created_date": "2020-01-25",
             "updated_date": "2020-03-14",
-            "cancelled_date": "2020-06-23",
+            "cancelled_date": "",
             "description": "I'm on a wheelchair",
             "notes": "Medical proof required."
         },
