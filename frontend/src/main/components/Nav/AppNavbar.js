@@ -84,7 +84,7 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
               {
                 isParticipant(currentUser) && (
                   <NavDropdown title="Shift" id="appnavbar-shift-dropdown" data-testid="appnavbar-shift-dropdown" >
-                    <NavDropdown.Item data0testid="appnavbar-shift-dropdown-table" as={Link} to="/shift/list">Driver Shifts</NavDropdown.Item>
+                    <NavDropdown.Item data-testid="appnavbar-shift-dropdown-table" as={Link} to="/shift/list">Driver Shifts</NavDropdown.Item>
                     { createShift(currentUser) }
                     </NavDropdown>
                 )
