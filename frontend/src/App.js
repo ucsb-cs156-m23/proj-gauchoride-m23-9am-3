@@ -10,6 +10,10 @@ import RideRequestEditPage from "main/pages/Ride/RideRequestEditPage";
 import RideRequestIndexPage from "main/pages/Ride/RideRequestIndexPage";
 import ShiftPage from "main/pages/ShiftPage";
 
+import ShiftCreatePage from "main/pages/Shift/ShiftCreatePage";
+import ShiftEditPage from "main/pages/Shift/ShiftEditPage";
+import ShiftIndexPage from "main/pages/Shift/ShiftIndexPage";
+
 
 
 
