@@ -41,7 +41,7 @@ const riderApplicationFixtures =
         },
         {
             "id": 4,
-            "status": "expired",
+            "status": "pending",
             "perm_number": "6547532",
             "email": "fgaucho@ucsb.edu",
             "created_date": "2023-02-25",
