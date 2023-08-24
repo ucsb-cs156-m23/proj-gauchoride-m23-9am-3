@@ -1,4 +1,4 @@
-import { screen, render, waitFor} from "@testing-library/react";
+import { screen, render, waitFor, findByTestId} from "@testing-library/react";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
@@ -173,7 +173,7 @@ describe("AppNavbar tests", () => {
         
         await waitFor(() => expect(getByText("Welcome, Phillip Conrad")).toBeInTheDocument());
         const shiftMenu = screen.queryByTestId("appnavbar-shift-dropdown");
-        expect(shiftMenu).not.toBeInTheDocument();        
+        expect(shiftMenu).not.toBeInTheDocument();
     });
 
     // test taken from https://github.com/ucsb-cs156/proj-courses repo

@@ -89,13 +89,6 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                   </NavDropdown>
                 )
               }
-              {
-                currentUser && currentUser.loggedIn && (
-                  <>
-                    <Nav.Link as={Link} to="/shift">Driver Shifts</Nav.Link>
-                  </>
-                )
-              }
             </Nav>
 
             <Nav className="ml-auto">
