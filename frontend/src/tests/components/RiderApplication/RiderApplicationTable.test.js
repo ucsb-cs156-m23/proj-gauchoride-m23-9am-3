@@ -140,11 +140,11 @@ describe("RiderApplicationTable tests", () => {
     
       const tdEditElement = document.querySelector('[data-testid="RiderApplicationTable-cell-row-2-col-Edit"]');
       const editButton = tdEditElement.querySelector('button');
-      expect(editButton.classList.contains('btn-primary'));  
+      expect(editButton.classList.contains('btn-primary')).toBeTruthy();  
   
       const tdCancelElement = document.querySelector('[data-testid="RiderApplicationTable-cell-row-2-col-Cancel"]');
       const cancelButton = tdCancelElement.querySelector('button');
-      expect(cancelButton.classList.contains('btn-danger'));  
+      expect(cancelButton.classList.contains('btn-danger')).toBeTruthy();  
     });
    
 
@@ -242,7 +242,7 @@ describe("RiderApplicationTable tests", () => {
         const tdEditElement = document.querySelector('[data-testid="RiderApplicationTable-cell-row-0-col-Edit"]');
         const editButton = tdEditElement.querySelector('button');
 
-        expect(editButton == null); 
+        expect(editButton).toBeNull(); 
       });
 
 
@@ -266,7 +266,9 @@ describe("RiderApplicationTable tests", () => {
     
         fireEvent.click(cancelButton);
   
-        expect(window.confirm).toHaveBeenCalled();
+        const [confirmationMessage] = window.confirm.mock.calls[0];
+        expect(confirmationMessage).toBe("Are you sure you want to cancel this application?\n\nClick 'OK' to confirm or 'Cancel' to keep your application active.");
+
         expect(mockCancelMutation).toHaveBeenCalled();
 
         // Restore the original window.confirm
@@ -293,7 +295,8 @@ describe("RiderApplicationTable tests", () => {
 
     fireEvent.click(cancelButton);
 
-    expect(window.confirm).toHaveBeenCalled();
+    const [confirmationMessage] = window.confirm.mock.calls[0];
+    expect(confirmationMessage).toBe("Are you sure you want to cancel this application?\n\nClick 'OK' to confirm or 'Cancel' to keep your application active.");
     expect(mockCancelMutation).not.toHaveBeenCalled();
 
     // Restore the original window.confirm
@@ -316,7 +319,7 @@ test("Cancel button does not show up for member with a non-pending application",
     const tdCancelElement = document.querySelector('[data-testid="RiderApplicationTable-cell-row-0-col-Cancel"]');
     const cancelButton = tdCancelElement.querySelector('button');
 
-    expect(cancelButton == null); 
+    expect(cancelButton).toBeNull(); 
 });   
     
   });

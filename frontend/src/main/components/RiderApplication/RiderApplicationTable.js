@@ -98,46 +98,7 @@ export default function RiderApplicationTable({
             }
         },
     ]
-
-    // const allColumns = [
-    //     {
-    //         Header: 'Application Id',
-    //         accessor: 'id', // accessor is the "key" in the data
-    //     },
-    //     {
-    //         Header: 'Perm Number',
-    //         accessor: "perm_number",
-    //     },
-    //     {
-    //         Header: 'Email',
-    //         accessor: 'email', 
-    //     },
-    //     {
-    //         Header: 'Date Applied',
-    //         accessor: 'created_date',
-    //     },
-    //     {
-    //         Header: 'Date Updated',
-    //         accessor: 'updated_date',
-    //     },
-    //     {
-    //         Header: 'Date Cancelled',
-    //         accessor: 'cancelled_date',
-    //     },
-    //     {
-    //         Header: 'Description',
-    //         accessor: 'description',
-    //     },
-    //     {
-    //         Header: 'Notes',
-    //         accessor: 'notes',
-    //     },
-    //     {
-    //         Header: 'Status',
-    //         accessor: 'status',
-    //     }
-    // ];
-    
+   
     const buttonColumnsAdmin = [
         ...defaultColumns,
         ButtonColumn("Review", "primary", reviewCallback, "RiderApplicationTable")
