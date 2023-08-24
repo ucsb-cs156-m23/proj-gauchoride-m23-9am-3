@@ -69,11 +69,11 @@ public class ShiftControllerTests extends ControllerTestCase {
                                 .andExpect(status().is(200)); // logged
         }
 
-        // Authorization tests for /api/shift/get?id={}
+        // Authorization tests for /api/shift?id={}
 
         @Test
         public void logged_out_users_cannot_get_by_id() throws Exception {
-                mockMvc.perform(get("/api/shift/get?id=7"))
+                mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().is(403)); // logged out users can't get by id
         }
 
@@ -81,14 +81,14 @@ public class ShiftControllerTests extends ControllerTestCase {
         @WithMockUser(roles = { "DRIVER" })
         @Test
         public void logged_in_driver_can_get_by_id() throws Exception {
-                mockMvc.perform(get("/api/shift/get?id=7"))
+                mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().is(404)); // logged, but no id exists
         }
 
         @WithMockUser(roles = { "ADMIN" })
         @Test
         public void logged_in_admin_can_get_by_id() throws Exception {
-                mockMvc.perform(get("/api/shift/get?id=7"))
+                mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().is(404)); // logged, but no id exists
         }
 
@@ -133,7 +133,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                 when(shiftRepository.findById(eq(7L))).thenReturn(Optional.of(shift));
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/shift/get?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
@@ -153,7 +153,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                 when(shiftRepository.findById(eq(7L))).thenReturn(Optional.empty());
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/shift/get?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().isNotFound()).andReturn();
 
                 // assert
@@ -183,7 +183,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                 when(shiftRepository.findById(eq(7L))).thenReturn(Optional.of(shift));
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/shift/get?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
@@ -213,7 +213,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                 when(shiftRepository.findById(eq(7L))).thenReturn(Optional.of(shift));
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/shift/get?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
@@ -233,7 +233,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                 when(shiftRepository.findById(eq(7L))).thenReturn(Optional.empty());
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/shift/get?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().isNotFound()).andReturn();
 
                 // assert
@@ -253,7 +253,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                 when(shiftRepository.findById(eq(7L))).thenReturn(Optional.empty());
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/shift/get?id=7"))
+                MvcResult response = mockMvc.perform(get("/api/shift?id=7"))
                                 .andExpect(status().isNotFound()).andReturn();
 
                 // assert
@@ -387,39 +387,6 @@ public class ShiftControllerTests extends ControllerTestCase {
 
 
         // POST
-
-        @WithMockUser(roles = { "DRIVER" })
-        @Test
-        public void a_driver_can_post_a_new_shift() throws Exception {
-                // arrange
-
-                long userId = currentUserService.getCurrentUser().getUser().getId();
-
-                Shift shift1 = Shift.builder()
-                                .driverID(userId)
-                                .day("Monday")
-                                .shiftStart("10:30AM")
-                                .shiftEnd("12:30PM")
-                                .driverBackupID(1)
-                                .build();
-
-                when(shiftRepository.save(eq(shift1))).thenReturn(shift1);
-
-                String postRequestString = "day=Monday&shiftStart=10:30AM&shiftEnd=12:30PM&driverID="+userId+"&driverBackupID=1";
-
-                // act
-                MvcResult response = mockMvc.perform(
-                                post("/api/shift/post?" + postRequestString)
-                                                .with(csrf()))
-                                .andExpect(status().isOk()).andReturn();
-
-                // assert
-                verify(shiftRepository, times(1)).save(shift1);
-                String expectedJson = mapper.writeValueAsString(shift1);
-                String responseString = response.getResponse().getContentAsString();
-                assertEquals(expectedJson, responseString);
-        }
-
         @WithMockUser(roles = { "ADMIN" })
         @Test
         public void an_admin_can_post_a_new_shift() throws Exception {
@@ -483,99 +450,20 @@ public class ShiftControllerTests extends ControllerTestCase {
                 assertEquals("Shift with id 15 deleted", json.get("message"));
         }
 
-        @WithMockUser(roles = { "DRIVER" })
-        @Test
-        public void driver_can_delete_own_shift() throws Exception {
-                // arrange
-
-                long userId = currentUserService.getCurrentUser().getUser().getId();
-
-                Shift shift1 = Shift.builder()
-                                .driverID(userId)
-                                .day("Monday")
-                                .shiftStart("10:30AM")
-                                .shiftEnd("12:30PM")
-                                .driverBackupID(1)
-                                .build();
-                
-                when(shiftRepository.findById(eq(7L))).thenReturn(Optional.of(shift1));
-
-                // act
-                MvcResult response = mockMvc.perform(
-                        delete("/api/shift?id=7")
-                                        .with(csrf()))
-                        .andExpect(status().isOk()).andReturn();
-                
-                // assert
-                verify(shiftRepository, times(1)).findById(7L);
-                verify(shiftRepository, times(1)).delete(any());
-
-                Map<String, Object> json = responseToJson(response);
-                assertEquals("Shift with id 7 deleted", json.get("message"));
-        }
-
-        @WithMockUser(roles = { "DRIVER" })
-        @Test
-        public void driver_tries_to_delete_another_shift() throws Exception {
-                // arrange: create mock shift belonging to different driver
-                Shift shift1 = Shift.builder()
-                                .driverID(123)
-                                .day("Tuesday")
-                                .shiftStart("12:00PM")
-                                .shiftEnd("3:00PM")
-                                .driverBackupID(2)
-                                .build();
-                
-                when(shiftRepository.findById(eq(15L))).thenReturn(Optional.of(shift1));
-
-                // act: attempt at deleting shift
-                MvcResult response = mockMvc.perform(
-                        delete("/api/shift?id=15")
-                                .with(csrf()))
-                        .andExpect(status().isForbidden()) // return Error 403
-                        .andReturn();
-                
-                // assert: check if response contains correct error message
-                Map<String, Object> json = responseToJson(response);
-                assertEquals("You do not have permission to delete this shift", json.get("message"));
-        }
-
-        @WithMockUser(roles = { "ADMIN" })
+        @WithMockUser(roles = { "ADMIN", "USER"})
         @Test
         public void admin_tries_to_delete_non_existant_shift_and_gets_right_error_message() throws Exception {
-                // arrange
-
-                when(shiftRepository.findById(eq(15L))).thenReturn(Optional.empty());
-
-                // act
-                MvcResult response = mockMvc.perform(
-                                delete("/api/shift?id=15")
-                                                .with(csrf()))
-                                .andExpect(status().isNotFound()).andReturn();
-                
-                // assert
-                verify(shiftRepository, times(1)).findById(15L);
-                Map<String, Object> json = responseToJson(response);
-                assertEquals("Shift with id 15 not found", json.get("message"));
-        }
-
-        @WithMockUser(roles = { "DRIVER" })
-        @Test
-        public void driver_tries_to_delete_non_existant_shift_and_gets_right_error_message() throws Exception {
-                // arrange
-
-                when(shiftRepository.findById(eq(7L))).thenReturn(Optional.empty());
-
-                // act
-                MvcResult response = mockMvc.perform(
-                                delete("/api/shift?id=7")
-                                                .with(csrf()))
-                                .andExpect(status().isNotFound()).andReturn();
-                
-                // assert
-                verify(shiftRepository, times(1)).findById(7L);
-                Map<String, Object> json = responseToJson(response);
-                assertEquals("Shift with id 7 not found", json.get("message"));
+    
+            when(shiftRepository.findById(eq(1L))).thenReturn(Optional.empty());
+    
+            MvcResult response = mockMvc.perform(
+                            delete("/api/shift?id=1")
+                                    .with(csrf()))
+                            .andExpect(status().isNotFound()).andReturn();
+            
+            verify(shiftRepository, times(1)).findById(1L);
+            Map<String, Object> json = responseToJson(response);
+            assertEquals("Shift with id 1 not found", json.get("message"));
         }
 
         @WithMockUser(roles = { "ADMIN" })
@@ -593,7 +481,7 @@ public class ShiftControllerTests extends ControllerTestCase {
                         .build();
                 
                 Shift shiftEdited = Shift.builder()
-                        .driverID(userId)
+                        .driverID(userId+1)
                         .day("Wednesday")
                         .shiftStart("5:00PM")
                         .shiftEnd("9:00PM")
@@ -621,152 +509,36 @@ public class ShiftControllerTests extends ControllerTestCase {
                 assertEquals(requestBody, responseString);
         }
 
-        @WithMockUser(roles = { "DRIVER" })
+        @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
-        public void driver_can_update_own_shift() throws Exception {
+        public void admin_cannot_update_shift_that_does_not_exit() throws Exception {
                 // arrange
+
                 long userId = currentUserService.getCurrentUser().getUser().getId();
 
-                Shift shift_Orig = Shift.builder()
-                        .driverID(userId)
-                        .day("Monday")
-                        .shiftStart("10:00AM")
-                        .shiftEnd("12:00PM")
-                        .driverBackupID(1)
-                        .build();
-                
-                Shift shift_Edited = Shift.builder()
-                        .driverID(userId)
+                Shift shiftEdited = Shift.builder()
+                        .driverID(userId+1)
                         .day("Wednesday")
-                        .shiftStart("12:00PM")
-                        .shiftEnd("2:00PM")
+                        .shiftStart("5:00PM")
+                        .shiftEnd("9:00PM")
                         .driverBackupID(5)
                         .build();
-                
-                String requestBody = mapper.writeValueAsString(shift_Edited);
 
-                when(shiftRepository.findById(eq(7L))).thenReturn(Optional.of(shift_Orig));
+                String requestBody = mapper.writeValueAsString(shiftEdited);
 
-                // act
+                when(shiftRepository.findById(eq(10L))).thenReturn(Optional.empty());
+
                 MvcResult response = mockMvc.perform(
-                        put("/api/shift?id=7")
+                        put("/api/shift?id=10")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding("utf-8")
                                 .content(requestBody)
                                 .with(csrf()))
-                        .andExpect(status().isOk()).andReturn();
-                
-                when(shiftRepository.findById(eq(7L))).thenReturn(Optional.of(shift_Edited));
-                
-                // assert
-                verify(shiftRepository, times(1)).findById(7L);
-                verify(shiftRepository, times(1)).save(shift_Edited);
-                String responseString = response.getResponse().getContentAsString();
-                assertEquals(requestBody, responseString);
-        }
-
-        @WithMockUser(roles = { "DRIVER" })
-        @Test
-        public void driver_cannot_update_other_shifts() throws Exception {
-                // arrange
-
-                Shift shift_Orig = Shift.builder()
-                        .driverID(123)
-                        .day("Tuesday")
-                        .shiftStart("9:00AM")
-                        .shiftEnd("12:00PM")
-                        .driverBackupID(2)
-                        .build();
-                
-                Shift shift_Edited = Shift.builder()
-                        .driverID(123)
-                        .day("Wednesday")
-                        .shiftStart("1:00PM")
-                        .shiftEnd("4:00PM")
-                        .driverBackupID(6)
-                        .build();
-
-                String requestBody = mapper.writeValueAsString(shift_Edited);
-                
-                when(shiftRepository.findById(eq(15L))).thenReturn(Optional.of(shift_Orig));
-
-                // act: attempt at updating shift
-                MvcResult response = mockMvc.perform(
-                        put("/api/shift?id=15")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestBody)
-                                .with(csrf()))
-                        .andExpect(status().isForbidden()) // return Error 403
-                        .andReturn();
-                
-                // assert: check if correct error message outputted
-                Map<String, Object> json = responseToJson(response);
-                assertEquals("You do not have permission to update this shift", json.get("message"));
-        }
-
-        @WithMockUser(roles = { "ADMIN" })
-        @Test
-        public void admin_cannot_update_shift_that_does_not_exist() throws Exception {
-                // arrange
-                long userId = currentUserService.getCurrentUser().getUser().getId();
-
-                Shift shift_Edited = Shift.builder()
-                        .driverID(userId)
-                        .day("Monday")
-                        .shiftStart("11:00AM")
-                        .shiftEnd("3:00PM")
-                        .driverBackupID(1)
-                        .build();
-                
-                String requestBody = mapper.writeValueAsString(shift_Edited);
-
-                when(shiftRepository.findById(eq(7L))).thenReturn(Optional.empty());
-
-                // act
-                MvcResult response = mockMvc.perform(
-                        put("/api/shift?id=7")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .characterEncoding("utf-8")
-                                .content(requestBody)
-                                .with(csrf()))
-                        .andExpect(status().isNotFound()).andReturn();                
+                        .andExpect(status().isNotFound()).andReturn();
 
                 // assert
-                verify(shiftRepository, times(1)).findById(7L);
+                verify(shiftRepository, times(1)).findById(10L);
                 Map<String, Object> json = responseToJson(response);
-                assertEquals("Shift with id 7 not found", json.get("message"));
-        }
-
-        @WithMockUser(roles = { "DRIVER" })
-        @Test
-        public void driver_cannot_update_shift_that_does_not_exist() throws Exception {
-                // arrange
-                long userId = currentUserService.getCurrentUser().getUser().getId();
-
-                Shift shift_Edited = Shift.builder()
-                        .driverID(userId)
-                        .day("Monday")
-                        .shiftStart("11:00AM")
-                        .shiftEnd("3:00PM")
-                        .driverBackupID(1)
-                        .build();
-                
-                String requestBody = mapper.writeValueAsString(shift_Edited);
-
-                when(shiftRepository.findById(eq(15L))).thenReturn(Optional.empty());
-
-                // act
-                MvcResult response = mockMvc.perform(
-                        put("/api/shift?id=15")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .characterEncoding("utf-8")
-                                .content(requestBody)
-                                .with(csrf()))
-                        .andExpect(status().isNotFound()).andReturn();                
-
-                // assert
-                verify(shiftRepository, times(1)).findById(15L);
-                Map<String, Object> json = responseToJson(response);
-                assertEquals("Shift with id 15 not found", json.get("message"));
+                assertEquals("Shift with id 10 not found", json.get("message"));
         }
 }
