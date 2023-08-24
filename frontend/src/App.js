@@ -3,13 +3,14 @@ import HomePage from "main/pages/HomePage";
 import ProfilePage from "main/pages/ProfilePage";
 import AdminUsersPage from "main/pages/AdminUsersPage";
 
+
+import PageNotFound from "main/pages/PageNotFound";
+import PrivacyPolicy from "main/pages/PrivacyPolicy";
+
 import RideRequestCreatePage from "main/pages/Ride/RideRequestCreatePage";
 import RideRequestEditPage from "main/pages/Ride/RideRequestEditPage";
 import RideRequestIndexPage from "main/pages/Ride/RideRequestIndexPage";
 import ShiftPage from "main/pages/ShiftPage";
-
-import PageNotFound from "main/pages/PageNotFound";
-import PrivacyPolicy from "main/pages/PrivacyPolicy";
 
 
 
@@ -66,7 +67,7 @@ function App() {
             </>
           )
         }
-        
+
         <Route exact path="/*" element={<PageNotFound />} />
         <Route exact path="/privacy" element={<PrivacyPolicy />} />
       </Routes>
