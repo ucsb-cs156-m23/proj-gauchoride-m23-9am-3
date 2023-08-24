@@ -162,10 +162,10 @@ describe("AppNavbar tests", () => {
         expect(shift_Table).toBeInTheDocument();
 
         const shiftCreate = screen.queryByTestId("appnavbar-shift-dropdown-create");
-        expect(shiftCreate).toBeInTheDocument(); 
+        expect(shiftCreate).not.toBeInTheDocument(); 
         
         const NOshiftCreate = screen.queryByTestId("NO-appnavbar-shift-dropdown-create");
-        expect(NOshiftCreate).not.toBeInTheDocument();  
+        expect(NOshiftCreate).toBeInTheDocument();  
     });
 
     test("renders shift table links correctly for rider", async () => {
@@ -194,10 +194,10 @@ describe("AppNavbar tests", () => {
         expect(shift_Table).toBeInTheDocument();
 
         const shiftCreate = screen.queryByTestId("appnavbar-shift-dropdown-create");
-        expect(shiftCreate).toBeInTheDocument(); 
+        expect(shiftCreate).not.toBeInTheDocument(); 
         
         const NOshiftCreate = screen.queryByTestId("NO-appnavbar-shift-dropdown-create");
-        expect(NOshiftCreate).not.toBeInTheDocument();    
+        expect(NOshiftCreate).toBeInTheDocument();    
     });
 
     test("not render shift table links for regular user", async () => {
