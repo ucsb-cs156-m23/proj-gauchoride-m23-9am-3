@@ -96,6 +96,7 @@ public class RideController extends ApiController {
         @Parameter(name="dropoffRoom", description="String, Room number for the dropoffLocation", example="1431", required = true)
         @RequestParam String dropoffRoom,
 
+
         @Parameter(name="course", description="String, Course number for the class at the dropoffLocation", example="CMPSC 156", required = true)
         @RequestParam String course,
 
