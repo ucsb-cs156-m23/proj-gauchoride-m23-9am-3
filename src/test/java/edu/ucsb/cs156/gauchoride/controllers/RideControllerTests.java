@@ -153,8 +153,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
                                 .pickupLocation("Phelps Hall")
-                                .room("1431")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
                                 .build();
 
                 when(rideRepository.findByIdAndRiderId(eq(7L), eq(userId))).thenReturn(Optional.of(ride));
@@ -204,15 +206,17 @@ public class RideControllerTests extends ControllerTestCase {
                 long otherUserId = userId + 1;
 
                 Ride ride = Ride.builder()
-                                .riderId(otherUserId)
+                                .riderId(userId)
                                 .student("CGaucho")
                                 .day("Monday")
                                 .course("CMPSC 156")
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
                                 .pickupLocation("Phelps Hall")
-                                .room("1431")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
                                 .build();
 
                 when(rideRepository.findByIdAndRiderId(eq(7L), eq(otherUserId))).thenReturn(Optional.of(ride));
@@ -241,15 +245,17 @@ public class RideControllerTests extends ControllerTestCase {
                 long otherUserId = userId + 1;
 
                 Ride ride = Ride.builder()
-                                .riderId(otherUserId)
+                                .riderId(userId)
                                 .student("CGaucho")
                                 .day("Monday")
                                 .course("CMPSC 156")
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
                                 .pickupLocation("Phelps Hall")
-                                .room("1431")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
                                 .build();
 
                 when(rideRepository.findById(eq(7L))).thenReturn(Optional.of(ride));
@@ -276,15 +282,17 @@ public class RideControllerTests extends ControllerTestCase {
                 long otherUserId = userId + 1;
 
                 Ride ride = Ride.builder()
-                                .riderId(otherUserId)
-                                .student("DGaucho")
+                                .riderId(userId)
+                                .student("CGaucho")
                                 .day("Monday")
                                 .course("CMPSC 156")
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
                                 .pickupLocation("Phelps Hall")
-                                .room("1431")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
                                 .build();
 
                 when(rideRepository.findById(eq(7L))).thenReturn(Optional.of(ride));
@@ -359,8 +367,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
                                 .pickupLocation("Phelps Hall")
-                                .room("1431")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
                                 .build();
 
                 Ride ride3 = Ride.builder()
@@ -371,8 +381,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("9:30AM")
                                 .endTime("10:45AM")
                                 .dropoffLocation("Phelps Hall")
+                                .dropoffRoom("3505")                                   
                                 .pickupLocation("Student Resource Building")
-                                .room("3505")
+                                .pickupRoom("1160")                                     
+                                .notes("Another random note")                                
                                 .build();
 
                 ArrayList<Ride> expectedRides = new ArrayList<>();
@@ -407,8 +419,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
                                 .pickupLocation("Phelps Hall")
-                                .room("1431")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
                                 .build();
 
                 Ride ride2 = Ride.builder()
@@ -419,8 +433,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("12:30PM")
                                 .endTime("1:45PM")
                                 .dropoffLocation("Phelps Hall")
+                                .dropoffRoom("3505")                    
                                 .pickupLocation("UCen")
-                                .room("3505")
+                                .pickupRoom("")                          
+                                .notes("")                                    
                                 .build();
 
                 Ride ride3 = Ride.builder()
@@ -431,8 +447,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("9:30AM")
                                 .endTime("10:45AM")
                                 .dropoffLocation("Phelps Hall")
+                                .dropoffRoom("3505")                                   
                                 .pickupLocation("Student Resource Building")
-                                .room("3505")
+                                .pickupRoom("1160")                                     
+                                .notes("Another random note")                                
                                 .build();
 
                 ArrayList<Ride> expectedRides = new ArrayList<>();
@@ -467,8 +485,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
                                 .pickupLocation("Phelps Hall")
-                                .room("1431")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
                                 .build();
 
                 Ride ride2 = Ride.builder()
@@ -479,8 +499,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("12:30PM")
                                 .endTime("1:45PM")
                                 .dropoffLocation("Phelps Hall")
+                                .dropoffRoom("3505")                    
                                 .pickupLocation("UCen")
-                                .room("3505")
+                                .pickupRoom("")                          
+                                .notes("")                                    
                                 .build();
 
                 Ride ride3 = Ride.builder()
@@ -491,8 +513,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("9:30AM")
                                 .endTime("10:45AM")
                                 .dropoffLocation("Phelps Hall")
+                                .dropoffRoom("3505")                                   
                                 .pickupLocation("Student Resource Building")
-                                .room("3505")
+                                .pickupRoom("1160")                                     
+                                .notes("Another random note")                                
                                 .build();
 
                 ArrayList<Ride> expectedRides = new ArrayList<>();
@@ -526,20 +550,22 @@ public class RideControllerTests extends ControllerTestCase {
                 long userId = currentUserService.getCurrentUser().getUser().getId();
 
                 Ride ride1 = Ride.builder()
-                        .riderId(userId)
-                        .student("Fake user")
-                        .day("Monday")
-                        .course("CMPSC 156")
-                        .startTime("2:00PM")
-                        .endTime("3:15PM")
-                        .dropoffLocation("South Hall")
-                        .pickupLocation("Phelps Hall")
-                        .room("1431")
-                        .build();
+                                .riderId(userId)
+                                .student("Fake user")
+                                .day("Monday")
+                                .course("CMPSC 156")
+                                .startTime("2:00PM")
+                                .endTime("3:15PM")
+                                .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
+                                .pickupLocation("Phelps Hall")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
+                                .build();
 
                 when(rideRepository.save(eq(ride1))).thenReturn(ride1);
 
-                String postRequesString = "day=Monday&course=CMPSC 156&startTime=2:00PM&endTime=3:15PM&pickupLocation=Phelps Hall&dropoffLocation=South Hall&room=1431";
+                String postRequesString = "day=Monday&course=CMPSC 156&startTime=2:00PM&endTime=3:15PM&pickupLocation=Phelps Hall&pickupRoom=1160&dropoffLocation=South Hall&dropoffRoom=1431&notes=A random note";
 
                 // act
                 MvcResult response = mockMvc.perform(
@@ -568,16 +594,18 @@ public class RideControllerTests extends ControllerTestCase {
                 long userId = currentUserService.getCurrentUser().getUser().getId();
 
                 Ride ride1 = Ride.builder()
-                        .riderId(userId)
-                        .student("CGaucho")
-                        .day("Monday")
-                        .course("CMPSC 156")
-                        .startTime("2:00PM")
-                        .endTime("3:15PM")
-                        .dropoffLocation("South Hall")
-                        .pickupLocation("Phelps Hall")
-                        .room("1431")
-                        .build();
+                                .riderId(userId)
+                                .student("CGaucho")
+                                .day("Monday")
+                                .course("CMPSC 156")
+                                .startTime("2:00PM")
+                                .endTime("3:15PM")
+                                .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
+                                .pickupLocation("Phelps Hall")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
+                                .build();
 
                 when(rideRepository.findByIdAndRiderId(eq(15L), eq(userId))).thenReturn(Optional.of(ride1));
 
@@ -605,16 +633,18 @@ public class RideControllerTests extends ControllerTestCase {
                 long otherUserId = userId + 1;
 
                 Ride ride1 = Ride.builder()
-                        .riderId(otherUserId)
-                        .student("CGaucho")
-                        .day("Monday")
-                        .course("CMPSC 156")
-                        .startTime("2:00PM")
-                        .endTime("3:15PM")
-                        .dropoffLocation("South Hall")
-                        .pickupLocation("Phelps Hall")
-                        .room("1431")
-                        .build();
+                                .riderId(userId)
+                                .student("CGaucho")
+                                .day("Monday")
+                                .course("CMPSC 156")
+                                .startTime("2:00PM")
+                                .endTime("3:15PM")
+                                .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
+                                .pickupLocation("Phelps Hall")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
+                                .build();
 
                 when(rideRepository.findByIdAndRiderId(eq(15L), eq(otherUserId))).thenReturn(Optional.of(ride1));
 
@@ -662,16 +692,18 @@ public class RideControllerTests extends ControllerTestCase {
                 long otherUserId = userId + 1;
 
                 Ride ride1 = Ride.builder()
-                        .riderId(otherUserId)
-                        .student("DGaucho")
-                        .day("Monday")
-                        .course("CMPSC 156")
-                        .startTime("2:00PM")
-                        .endTime("3:15PM")
-                        .dropoffLocation("South Hall")
-                        .pickupLocation("Phelps Hall")
-                        .room("1431")
-                        .build();
+                                .riderId(userId)
+                                .student("CGaucho")
+                                .day("Monday")
+                                .course("CMPSC 156")
+                                .startTime("2:00PM")
+                                .endTime("3:15PM")
+                                .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
+                                .pickupLocation("Phelps Hall")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
+                                .build();
 
                 when(rideRepository.findById(eq(15L))).thenReturn(Optional.of(ride1));
 
@@ -698,16 +730,18 @@ public class RideControllerTests extends ControllerTestCase {
                 long otherUserId = userId + 1;
 
                 Ride ride1 = Ride.builder()
-                        .riderId(otherUserId)
-                        .student("DGaucho")
-                        .day("Monday")
-                        .course("CMPSC 156")
-                        .startTime("2:00PM")
-                        .endTime("3:15PM")
-                        .dropoffLocation("South Hall")
-                        .pickupLocation("Phelps Hall")
-                        .room("1431")
-                        .build();
+                                .riderId(userId)
+                                .student("CGaucho")
+                                .day("Monday")
+                                .course("CMPSC 156")
+                                .startTime("2:00PM")
+                                .endTime("3:15PM")
+                                .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
+                                .pickupLocation("Phelps Hall")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
+                                .build();
 
                 when(rideRepository.findById(eq(15L))).thenReturn(Optional.of(ride1));
 
@@ -786,8 +820,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
                                 .pickupLocation("Phelps Hall")
-                                .room("1431")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
                                 .build();
 
                 Ride ride_edited = Ride.builder()
@@ -798,8 +834,10 @@ public class RideControllerTests extends ControllerTestCase {
                                 .startTime("12:30PM")
                                 .endTime("1:45PM")
                                 .dropoffLocation("Phelps Hall")
+                                .dropoffRoom("3505")
                                 .pickupLocation("UCen")
-                                .room("3505")
+                                .pickupRoom("")
+                                .notes("Another random note")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(ride_edited);
@@ -832,27 +870,31 @@ public class RideControllerTests extends ControllerTestCase {
                 long otherUserId = userId + 1;
 
                 Ride ride_original = Ride.builder()
-                                .riderId(otherUserId)
-                                .student("DGaucho")
+                                .riderId(userId)
+                                .student("CGaucho")
                                 .day("Monday")
                                 .course("CMPSC 156")
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
                                 .pickupLocation("Phelps Hall")
-                                .room("1431")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
                                 .build();
 
                 Ride ride_edited = Ride.builder()
-                                .riderId(otherUserId)
+                                .riderId(userId)
                                 .student("DGaucho")
                                 .day("Thursday")
                                 .course("MATH 118C")
                                 .startTime("12:30PM")
                                 .endTime("1:45PM")
                                 .dropoffLocation("Phelps Hall")
+                                .dropoffRoom("3505")
                                 .pickupLocation("UCen")
-                                .room("3505")
+                                .pickupRoom("")
+                                .notes("Another random note")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(ride_edited);
@@ -883,14 +925,16 @@ public class RideControllerTests extends ControllerTestCase {
 
                 Ride ride_edited = Ride.builder()
                                 .riderId(userId)
-                                .student("CGaucho")
+                                .student("DGaucho")
                                 .day("Thursday")
                                 .course("MATH 118C")
                                 .startTime("12:30PM")
                                 .endTime("1:45PM")
                                 .dropoffLocation("Phelps Hall")
+                                .dropoffRoom("3505")
                                 .pickupLocation("UCen")
-                                .room("3505")
+                                .pickupRoom("")
+                                .notes("Another random note")
                                 .build();
 
 
@@ -925,26 +969,30 @@ public class RideControllerTests extends ControllerTestCase {
 
                 Ride ride_original = Ride.builder()
                                 .riderId(otherUserId)
-                                .student("DGaucho")
+                                .student("CGaucho")
                                 .day("Monday")
                                 .course("CMPSC 156")
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
                                 .pickupLocation("Phelps Hall")
-                                .room("1431")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
                                 .build();
 
                 Ride ride_edited = Ride.builder()
                                 .riderId(otherUserId)
-                                .student("DGaucho")
+                                .student("CGaucho")
                                 .day("Thursday")
                                 .course("MATH 118C")
                                 .startTime("12:30PM")
                                 .endTime("1:45PM")
                                 .dropoffLocation("Phelps Hall")
+                                .dropoffRoom("3505")
                                 .pickupLocation("UCen")
-                                .room("3505")
+                                .pickupRoom("")
+                                .notes("Another random note")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(ride_edited);
@@ -976,27 +1024,31 @@ public class RideControllerTests extends ControllerTestCase {
                 long otherUserId = userId + 1;
 
                 Ride ride_original = Ride.builder()
-                                .riderId(otherUserId)
-                                .student("DGaucho")
+                                .riderId(userId)
+                                .student("CGaucho")
                                 .day("Monday")
                                 .course("CMPSC 156")
                                 .startTime("2:00PM")
                                 .endTime("3:15PM")
                                 .dropoffLocation("South Hall")
+                                .dropoffRoom("1431")                    
                                 .pickupLocation("Phelps Hall")
-                                .room("1431")
+                                .pickupRoom("1160")                      
+                                .notes("A random note")                       
                                 .build();
 
                 Ride ride_edited = Ride.builder()
-                                .riderId(otherUserId)
-                                .student("DGaucho")
+                                .riderId(userId)
+                                .student("CGaucho")
                                 .day("Thursday")
                                 .course("MATH 118C")
                                 .startTime("12:30PM")
                                 .endTime("1:45PM")
                                 .dropoffLocation("Phelps Hall")
+                                .dropoffRoom("3505")
                                 .pickupLocation("UCen")
-                                .room("3505")
+                                .pickupRoom("")
+                                .notes("Another random note")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(ride_edited);
@@ -1028,14 +1080,16 @@ public class RideControllerTests extends ControllerTestCase {
 
                 Ride ride_edited = Ride.builder()
                                 .riderId(userId)
-                                .student("CGaucho")
+                                .student("DGaucho")
                                 .day("Thursday")
                                 .course("MATH 118C")
                                 .startTime("12:30PM")
                                 .endTime("1:45PM")
                                 .dropoffLocation("Phelps Hall")
+                                .dropoffRoom("3505")
                                 .pickupLocation("UCen")
-                                .room("3505")
+                                .pickupRoom("")
+                                .notes("Another random note")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(ride_edited);
@@ -1066,14 +1120,16 @@ public class RideControllerTests extends ControllerTestCase {
 
                 Ride ride_edited = Ride.builder()
                                 .riderId(userId)
-                                .student("CGaucho")
+                                .student("DGaucho")
                                 .day("Thursday")
                                 .course("MATH 118C")
                                 .startTime("12:30PM")
                                 .endTime("1:45PM")
                                 .dropoffLocation("Phelps Hall")
+                                .dropoffRoom("3505")
                                 .pickupLocation("UCen")
-                                .room("3505")
+                                .pickupRoom("")
+                                .notes("Another random note")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(ride_edited);

@@ -14,9 +14,11 @@ export default function RideRequestCreatePage() {
             startTime: ride.start,
             endTime: ride.end, 
             pickupLocation: ride.pickup,
+            pickupRoom: ride.pickupRoom,
             dropoffLocation: ride.dropoff,
-            room: ride.room,
-            course: ride.course
+            dropoffRoom: ride.dropoffRoom,
+            course: ride.course,
+            notes: ride.notes
         }
     });
 

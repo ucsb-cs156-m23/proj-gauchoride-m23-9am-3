@@ -44,6 +44,9 @@ export default function Footer() {
           <a data-testid="footer-sticker-link" href="https://www.as.ucsb.edu/sticker-packs">www.as.ucsb.edu/sticker-packs/</a>
           .
         </p>
+        <p>
+          <a href="/privacy">Privacy Policy</a>
+        </p>
       </Container>
     </footer>
   );
