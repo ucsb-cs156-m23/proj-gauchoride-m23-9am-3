@@ -173,7 +173,7 @@ describe("AppNavbar tests", () => {
         
         await waitFor(() => expect(getByText("Welcome, Phillip Conrad")).toBeInTheDocument());
         const shiftMenu = screen.queryByTestId("appnavbar-shift-dropdown");
-        expect(shiftMenu).not.toBeInTheDocument();
+        expect(shiftMenu).not.toBeInTheDocument();        
     });
 
     // test taken from https://github.com/ucsb-cs156/proj-courses repo
@@ -528,5 +528,4 @@ describe("AppNavbar tests", () => {
     });
 
 });
-
 
