@@ -8,28 +8,36 @@ import edu.ucsb.cs156.gauchoride.repositories.ShiftRepository;
 import edu.ucsb.cs156.gauchoride.repositories.UserRepository;
 import edu.ucsb.cs156.gauchoride.errors.EntityNotFoundException;
 import edu.ucsb.cs156.gauchoride.models.CurrentUser;
+import lombok.extern.slf4j.Slf4j;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 
+import javax.validation.Valid;
+
 
 @Tag(name = "Shift information")
 @RequestMapping("/api/shift")
 @RestController
+@Slf4j
 public class ShiftController extends ApiController {
     @Autowired
     ShiftRepository shiftRepository;
@@ -49,7 +57,7 @@ public class ShiftController extends ApiController {
 
     @Operation(summary = "Get shift by id")
     @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DRIVER') || hasRole('ROLE_USER')")
-    @GetMapping("/get")
+    @GetMapping("")
     public Shift shiftByID(
             @Parameter(name = "id", description = "Long, id number of shift to get", example = "1", required = true) @RequestParam Long id)
             throws JsonProcessingException {
@@ -59,7 +67,7 @@ public class ShiftController extends ApiController {
     }
 
     @Operation(summary = "Create a new shift for the table")
-    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_DRIVER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
     public Shift postShift(
         @Parameter(name="day") @RequestParam String day,
@@ -72,14 +80,50 @@ public class ShiftController extends ApiController {
 
         Shift shift = new Shift();
 
-        shift.setDriverID(getCurrentUser().getUser().getId());
         shift.setDay(day);
         shift.setShiftStart(shiftStart);
         shift.setShiftEnd(shiftEnd);
+        shift.setDriverID(driverID);
         shift.setDriverBackupID(driverBackupID);
 
         Shift savedShift = shiftRepository.save(shift);
 
         return savedShift;
+    }
+
+    @Operation(summary= "Delete a shift")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("")
+    public Object deleteShift(
+            @Parameter(name="id") @RequestParam Long id) throws AccessDeniedException {
+        Shift shift = shiftRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Shift.class, id));
+        
+        shiftRepository.delete(shift);
+
+        return genericMessage("Shift with id %s deleted".formatted(id));
+    }
+
+    @Operation(summary= "Update a shift")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public Shift updateShifts(
+            @Parameter(name="id") @RequestParam Long id,
+            @RequestBody @Valid Shift incoming) throws AccessDeniedException{
+        
+        Shift shift = shiftRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Shift.class, id));
+
+        shift.setDay(incoming.getDay());
+        shift.setShiftStart(incoming.getShiftStart());
+        shift.setShiftEnd(incoming.getShiftEnd());
+        shift.setDriverID(incoming.getDriverID());
+        shift.setDriverBackupID(incoming.getDriverBackupID());
+
+
+        shiftRepository.save(shift);
+
+        return shift;
+
     }
 }
