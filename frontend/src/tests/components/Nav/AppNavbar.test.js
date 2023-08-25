@@ -119,7 +119,21 @@ describe("AppNavbar tests", () => {
         
         await waitFor(() => expect(getByText("Welcome, Phill Conrad")).toBeInTheDocument());
         const shiftMenu = getByTestId("appnavbar-shift-dropdown");
-        expect(shiftMenu).toBeInTheDocument();        
+        expect(shiftMenu).toBeInTheDocument();
+        
+        const dropdown = getByTestId("appnavbar-shift-dropdown");
+        const aElement = dropdown.querySelector("a");
+        expect(aElement).toBeInTheDocument();
+        aElement?.click();
+        
+        const shift_Table = screen.queryByTestId("appnavbar-shift-dropdown-table");
+        expect(shift_Table).toBeInTheDocument();
+
+        const shiftCreate = screen.queryByTestId("appnavbar-shift-dropdown-create");
+        expect(shiftCreate).toBeInTheDocument(); 
+        
+        const NOshiftCreate = screen.queryByTestId("NO-appnavbar-shift-dropdown-create");
+        expect(NOshiftCreate).not.toBeInTheDocument();  
     });
 
     test("renders shift table links correctly for driver", async () => {
@@ -137,7 +151,21 @@ describe("AppNavbar tests", () => {
         
         await waitFor(() => expect(getByText("Welcome, Phillip Conrad")).toBeInTheDocument());
         const shiftMenu = getByTestId("appnavbar-shift-dropdown");
-        expect(shiftMenu).toBeInTheDocument();        
+        expect(shiftMenu).toBeInTheDocument();
+
+        const dropdown = getByTestId("appnavbar-shift-dropdown");
+        const aElement = dropdown.querySelector("a");
+        expect(aElement).toBeInTheDocument();
+        aElement?.click();
+        
+        const shift_Table = screen.queryByTestId("appnavbar-shift-dropdown-table");
+        expect(shift_Table).toBeInTheDocument();
+
+        const shiftCreate = screen.queryByTestId("appnavbar-shift-dropdown-create");
+        expect(shiftCreate).not.toBeInTheDocument(); 
+        
+        const NOshiftCreate = screen.queryByTestId("NO-appnavbar-shift-dropdown-create");
+        expect(NOshiftCreate).toBeInTheDocument();  
     });
 
     test("renders shift table links correctly for rider", async () => {
@@ -155,7 +183,21 @@ describe("AppNavbar tests", () => {
         
         await waitFor(() => expect(getByText("Welcome, Phillip Conrad")).toBeInTheDocument());
         const shiftMenu = getByTestId("appnavbar-shift-dropdown");
-        expect(shiftMenu).toBeInTheDocument();        
+        expect(shiftMenu).toBeInTheDocument();
+
+        const dropdown = getByTestId("appnavbar-shift-dropdown");
+        const aElement = dropdown.querySelector("a");
+        expect(aElement).toBeInTheDocument();
+        aElement?.click();
+        
+        const shift_Table = screen.queryByTestId("appnavbar-shift-dropdown-table");
+        expect(shift_Table).toBeInTheDocument();
+
+        const shiftCreate = screen.queryByTestId("appnavbar-shift-dropdown-create");
+        expect(shiftCreate).not.toBeInTheDocument(); 
+        
+        const NOshiftCreate = screen.queryByTestId("NO-appnavbar-shift-dropdown-create");
+        expect(NOshiftCreate).toBeInTheDocument();    
     });
 
     test("not render shift table links for regular user", async () => {
@@ -173,7 +215,7 @@ describe("AppNavbar tests", () => {
         
         await waitFor(() => expect(getByText("Welcome, Phillip Conrad")).toBeInTheDocument());
         const shiftMenu = screen.queryByTestId("appnavbar-shift-dropdown");
-        expect(shiftMenu).not.toBeInTheDocument();        
+        expect(shiftMenu).not.toBeInTheDocument();   
     });
 
     // test taken from https://github.com/ucsb-cs156/proj-courses repo
@@ -616,5 +658,4 @@ describe("AppNavbar tests", () => {
     });
 
 });
-
 

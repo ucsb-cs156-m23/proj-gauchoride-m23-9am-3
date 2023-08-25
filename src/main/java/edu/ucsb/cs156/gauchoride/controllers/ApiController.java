@@ -12,6 +12,7 @@ import edu.ucsb.cs156.gauchoride.errors.EntityNotFoundException;
 import edu.ucsb.cs156.gauchoride.models.CurrentUser;
 import edu.ucsb.cs156.gauchoride.services.CurrentUserService;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Map;
 
 /**
@@ -28,6 +29,7 @@ public abstract class ApiController {
 
   /**
    * Get the current user
+   * 
    * @return the current user
    */
 
@@ -35,9 +37,9 @@ public abstract class ApiController {
     return currentUserService.getCurrentUser();
   }
 
-
   /**
    * This creates a plain old java object that can be returned as a JSON response
+   * 
    * @return a Map object with a single key/value pair: "message" => message
    */
 
@@ -45,16 +47,17 @@ public abstract class ApiController {
     return Map.of("message", message);
   }
 
-   /**
-   * This catches any EntityNotFoundExceptions and returns a 404 (NOT_FOUND) response
+  /**
+   * This catches any EntityNotFoundExceptions and returns a 404 (NOT_FOUND)
+   * response
+   * 
    * @return a Map object that can be returned as a JSON response
    */
   @ExceptionHandler({ EntityNotFoundException.class })
   @ResponseStatus(HttpStatus.NOT_FOUND)
   public Object handleGenericException(Throwable e) {
     return Map.of(
-      "type", e.getClass().getSimpleName(),
-      "message", e.getMessage()
-    );
+        "type", e.getClass().getSimpleName(),
+        "message", e.getMessage());
   }
 }

@@ -20,6 +20,14 @@ function createRideRequest(currentUser) {
   }
 }
 
+function createShift(currentUser) {
+  if (hasRole(currentUser, "ROLE_ADMIN")) {
+    return (<NavDropdown.Item data-testid="appnavbar-shift-dropdown-create" as={Link} to="/shift/create">Create Shift</NavDropdown.Item>)
+  } else {
+    return (<div data-testid="NO-appnavbar-shift-dropdown-create"></div>)
+  }
+}
+
 export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUrl = window.location.href }) {
   const styles = {
     navbar: {
@@ -76,8 +84,9 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
               {
                 isParticipant(currentUser) && (
                   <NavDropdown title="Shift" id="appnavbar-shift-dropdown" data-testid="appnavbar-shift-dropdown" >
-                    <NavDropdown.Item as={Link} to="/shift/list">Driver shift table</NavDropdown.Item>
-                  </NavDropdown>
+                    <NavDropdown.Item data-testid="appnavbar-shift-dropdown-table" as={Link} to="/shift/list">Driver Shifts</NavDropdown.Item>
+                    { createShift(currentUser) }
+                    </NavDropdown>
                 )
               }
               {
