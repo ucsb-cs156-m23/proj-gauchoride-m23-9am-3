@@ -27,12 +27,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
     @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
     @PutMapping(&quot;/updatecellphone&quot;)
     public Object updateCellphone( @Parameter (name = &quot;cellphone&quot;, description = &quot;a cellphone number&quot;, example = &quot;805-000-0000&quot;, required = true) @RequestParam String cellphone) {
-<span class="nc" id="L30">        Long id = super.getCurrentUser().getId();</span>
-<span class="nc" id="L31">        User user = userRepository.findById(id)</span>
-<span class="nc" id="L32">                .orElseThrow(() -&gt; new EntityNotFoundException(User.class, id));</span>
-<span class="nc" id="L33">        user.setCellphone(cellphone);</span>
-<span class="nc" id="L34">        userRepository.save(user);</span>
-<span class="nc" id="L35">        return genericMessage(&quot;User with id %s is updated with cellphone %S&quot;.formatted(id, cellphone));</span>
+<span class="fc" id="L30">        Long id = super.getCurrentUser().getId();</span>
+<span class="fc" id="L31">        User user = userRepository.findById(id)</span>
+<span class="fc" id="L32">                .orElseThrow(() -&gt; new EntityNotFoundException(User.class, id));</span>
+<span class="fc" id="L33">        user.setCellphone(cellphone);</span>
+<span class="fc" id="L34">        userRepository.save(user);</span>
+<span class="fc" id="L35">        return user;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
