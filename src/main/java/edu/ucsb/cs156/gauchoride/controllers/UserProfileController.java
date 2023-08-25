@@ -32,6 +32,6 @@ public class UserProfileController extends ApiController {
                 .orElseThrow(() -> new EntityNotFoundException(User.class, id));
         user.setCellphone(cellphone);
         userRepository.save(user);
-        return genericMessage("User with id %s is updated with cellphone %S".formatted(id, cellphone));
+        return user;
     }
 }
