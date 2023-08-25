@@ -12,11 +12,6 @@ import ShiftPage from "main/pages/ShiftPage";
 import RiderApplicationCreatePage from "main/pages/RiderApplication/RiderApplicationCreatePage";
 import RiderApplicationEditPageMember from "main/pages/RiderApplication/RiderApplicationEditPageMember";
 import RiderApplicationIndexPageMember from "main/pages/RiderApplication/RiderApplicationIndexPageMember";
-import RiderApplicationShowPage from "main/pages/RiderApplication/RiderApplicationShowPage";
-
-
-
-
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
@@ -63,7 +58,7 @@ function App() {
           (hasRole(currentUser, "ROLE_MEMBER") )&& <Route exact path="/apply/rider/new" element={<RiderApplicationCreatePage />} />
         }
         {
-          (hasRole(currentUser, "ROLE_MEMBER") )&& <Route exact path="/apply/rider/show/:id" element={<RiderApplicationShowPage />} />
+          (hasRole(currentUser, "ROLE_MEMBER") )&& <Route exact path="/apply/rider/show/:id" element={<RiderApplicationEditPageMember />} />
         }
         {
           (hasRole(currentUser, "ROLE_MEMBER") )&& <Route exact path="/apply/rider/edit/:id" element={<RiderApplicationEditPageMember />} />
