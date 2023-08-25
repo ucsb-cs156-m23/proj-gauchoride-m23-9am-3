@@ -10,6 +10,10 @@ import RideRequestEditPage from "main/pages/Ride/RideRequestEditPage";
 import RideRequestIndexPage from "main/pages/Ride/RideRequestIndexPage";
 import ShiftPage from "main/pages/ShiftPage";
 
+import ShiftCreatePage from "main/pages/Shift/ShiftCreatePage";
+import ShiftEditPage from "main/pages/Shift/ShiftEditPage";
+import ShiftIndexPage from "main/pages/Shift/ShiftIndexPage";
+
 
 
 
@@ -48,6 +52,24 @@ function App() {
         }
         {
           hasRole(currentUser, "ROLE_RIDER") && <Route exact path="/shift/list" element={<ShiftPage />} />
+        }
+        {
+          hasRole(currentUser, "ROLE_USER")
+        }
+        {
+          (hasRole(currentUser, "ROLE_DRIVER") || hasRole(currentUser, "ROLE_USER")) && (
+            <>
+              <Route exact path="/shift" element={<ShiftIndexPage />} />
+            </>
+          )
+        }
+        {
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/shift/create" element={<ShiftCreatePage />} />
+              <Route exact path="/shift/edit/:id" element={<ShiftEditPage />} />
+            </>
+          )
         }
         {
           hasRole(currentUser, "ROLE_USER")

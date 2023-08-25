@@ -40,7 +40,7 @@ public class ShiftControllerTests extends ControllerTestCase {
         @MockBean
         UserRepository userRepository;
 
-        // Authorization tests for /api/shift/all
+        //Authorization tests for /api/shift/all
 
         @Test
         public void logged_out_users_cannot_get_all() throws Exception {
