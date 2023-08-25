@@ -49,12 +49,6 @@ const ProfilePage = () => {
     const handleSave = async () => {
 
         mutation.mutate();
-        // Stryker disable next-line all : hard to set up test for caching
-        /* if (isSuccess) {
-            setPhone(newPhone);
-            // Stryker disable next-line all
-            setShowModal(false);
-        } */
     };    
 
     if (!currentUser.loggedIn) {
@@ -62,10 +56,6 @@ const ProfilePage = () => {
     }
 
     const { email, pictureUrl, fullName } = currentUser.root.user;
-
-/*     if (currentUser.initialData) {
-        return <p>Loading...</p>;
-    } */
     
     return (
         <BasicLayout>

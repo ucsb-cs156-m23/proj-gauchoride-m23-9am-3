@@ -173,40 +173,6 @@ describe("ProfilePage tests", () => {
         await new Promise(r => setTimeout(r, 2000)); 
         await waitFor(() => expect(getByText('Cellphone No.:')).toBeInTheDocument());
     });
-
-    /* test("updates phone number and closes modal", async () => {
-        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-        axiosMock.onPut("/api/userprofile/updatecellphone").reply(200, { success: true });
-        
-        const { getByText, getByLabelText } = render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <ProfilePage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-        
-        await waitFor(() => expect(getByText("Cellphone No.:")).toBeInTheDocument());
-        
-        const editButton = getByText('Edit');
-        fireEvent.click(editButton);
-        
-        await waitFor(() => expect(getByText('Update Cell Phone Number')).toBeInTheDocument());
-        
-        const phoneNumberInput = getByLabelText('Phone Number');
-        fireEvent.change(phoneNumberInput, { target: { value: '1234567890' } });
-        
-        const saveButton = getByText('Save Changes');
-        fireEvent.click(saveButton);
-        
-        // Check that the modal is closed
-        await waitFor(() => {
-            expect(queryByText('Update Cell Phone Number')).not.toBeInTheDocument();
-        });
-        
-        // Check that the phone number is updated
-        await waitFor(() => expect(getByText('Cellphone No.:')).toBeInTheDocument());
-    });   */  
 });
 
 
