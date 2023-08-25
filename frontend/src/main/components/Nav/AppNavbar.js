@@ -9,6 +9,7 @@ function isParticipant(currentUser) {
     hasRole(currentUser, "ROLE_ADMIN")
     || hasRole(currentUser, "ROLE_DRIVER")
     || hasRole(currentUser, "ROLE_RIDER")
+    || hasRole(currentUser, "ROLE_MEMBER")
   );
 }
 
@@ -86,6 +87,16 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                     <NavDropdown.Item data-testid="appnavbar-ride-dropdown-rides" as={Link} to="/ride/">Rides</NavDropdown.Item>
                     { createRideRequest(currentUser) }
                   </NavDropdown>
+                )
+              }
+              {
+                hasRole(currentUser, "ROLE_MEMBER") && (
+                  <Nav.Link as={Link} to="/apply/rider">Apply to be a Rider</Nav.Link>
+                )
+              }
+              {
+                hasRole(currentUser, "ROLE_ADMIN") && (
+                  <Nav.Link as={Link} to="/admin/applications/riders">Rider Applications</Nav.Link>
                 )
               }
             </Nav>
