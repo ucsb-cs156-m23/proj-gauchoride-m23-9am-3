@@ -55,21 +55,14 @@ function App() {
           hasRole(currentUser, "ROLE_USER")
         }
         {
-          (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "MEMBER") )&& <Route exact path="/apply/rider" element={<RiderApplicationIndexPage />} />
+          (hasRole(currentUser, "MEMBER") )&& <Route exact path="/apply/rider" element={<RiderApplicationIndexPageMember />} />
         }
         {
-          (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "MEMBER") )&& <Route exact path="/apply/rider/new" element={<RiderApplicationCreatePage />} />
+          (hasRole(currentUser, "MEMBER") )&& <Route exact path="/apply/rider/new" element={<RiderApplicationCreatePageMember />} />
         }
         {
-          (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "MEMBER") )&& <Route exact path="/apply/rider/show/:id" element={<RiderApplicationEditPage />} />
+          (hasRole(currentUser, "MEMBER") )&& <Route exact path="/apply/rider/show/:id" element={<RiderApplicationEditPageMember />} />
         }
-        {
-          (hasRole(currentUser, "ROLE_ADMIN"))&& <Route exact path="/admin/applications/riders" element={<RiderApplicationIndexPage />} />
-        }
-        {
-          (hasRole(currentUser, "ROLE_ADMIN"))&& <Route exact path="/admin/applications/riders/review/:id" element={<RiderApplicationEditPage />} />
-        }
-        
         <Route exact path="/*" element={<PageNotFound />} />
         <Route exact path="/privacy" element={<PrivacyPolicy />} />
       </Routes>
