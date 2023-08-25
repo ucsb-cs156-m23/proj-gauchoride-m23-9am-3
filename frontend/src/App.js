@@ -10,8 +10,8 @@ import RideRequestEditPage from "main/pages/Ride/RideRequestEditPage";
 import RideRequestIndexPage from "main/pages/Ride/RideRequestIndexPage";
 import ShiftPage from "main/pages/ShiftPage";
 import RiderApplicationCreatePage from "main/pages/RiderApplication/RiderApplicationCreatePage";
-import RiderApplicationEditPage from "main/pages/RiderApplication/RiderApplicationEditPageMember";
-import RiderApplicationIndexPage from "main/pages/RiderApplication/RiderApplicationIndexPageMember";
+import RiderApplicationEditPageMember from "main/pages/RiderApplication/RiderApplicationEditPageMember";
+import RiderApplicationIndexPageMember from "main/pages/RiderApplication/RiderApplicationIndexPageMember";
 
 
 
