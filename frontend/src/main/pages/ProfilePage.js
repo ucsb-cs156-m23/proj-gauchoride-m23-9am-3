@@ -30,6 +30,7 @@ const ProfilePage = () => {
 
       const onSuccess = (item) => {
         console.log('User Updated:', item);
+        // TODO: refresh currentUser cache instead of forcing a full page reload
         window.location.reload();
         handleClose();
       }
