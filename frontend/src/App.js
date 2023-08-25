@@ -11,7 +11,7 @@ import RideRequestIndexPage from "main/pages/Ride/RideRequestIndexPage";
 import ShiftPage from "main/pages/ShiftPage";
 import RiderApplicationCreatePage from "main/pages/RiderApplication/RiderApplicationCreatePage";
 import RiderApplicationEditPage from "main/pages/RiderApplication/RiderApplicationEditPage";
-import RiderApplicationIndexPage from "main/pages/RiderApplication/RiderApplicationIRiderApplication;
+import RiderApplicationIndexPage from "main/pages/RiderApplication/RiderApplicationIndexPage";
 
 
 
