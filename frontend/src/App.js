@@ -63,6 +63,9 @@ function App() {
         {
           (hasRole(currentUser, "ROLE_MEMBER") )&& <Route exact path="/apply/rider/show/:id" element={<RiderApplicationEditPageMember />} />
         }
+        {
+          (hasRole(currentUser, "ROLE_MEMBER") )&& <Route exact path="/apply/rider/edit/:id" element={<RiderApplicationEditPageMember />} />
+        }
         <Route exact path="/*" element={<PageNotFound />} />
         <Route exact path="/privacy" element={<PrivacyPolicy />} />
       </Routes>
