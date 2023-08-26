@@ -9,6 +9,7 @@ function isParticipant(currentUser) {
     hasRole(currentUser, "ROLE_ADMIN")
     || hasRole(currentUser, "ROLE_DRIVER")
     || hasRole(currentUser, "ROLE_RIDER")
+    || hasRole(currentUser, "ROLE_MEMBER")
   );
 }
 
