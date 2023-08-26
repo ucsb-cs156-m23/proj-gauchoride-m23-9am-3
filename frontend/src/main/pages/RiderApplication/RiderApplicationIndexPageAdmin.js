@@ -3,8 +3,6 @@ import { useBackend } from 'main/utils/useBackend';
 
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import {useCurrentUser} from 'main/utils/currentUser'
-// import Button from 'react-bootstrap/Button';
-// import { Link } from 'react-router-dom';
 import RiderApplicationTable from "main/components/RiderApplication/RiderApplicationTable";
 
 export default function RiderApplicationIndexPage() {

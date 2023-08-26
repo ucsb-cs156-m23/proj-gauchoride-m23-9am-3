@@ -13,6 +13,7 @@ import RiderApplicationCreatePage from "main/pages/RiderApplication/RiderApplica
 import RiderApplicationEditPageMember from "main/pages/RiderApplication/RiderApplicationEditPageMember";
 import RiderApplicationIndexPageMember from "main/pages/RiderApplication/RiderApplicationIndexPageMember";
 import RiderApplicationIndexPageAdmin from "main/pages/RiderApplication/RiderApplicationIndexPageAdmin";
+import RiderApplicationReviewPage from "main/pages/RiderApplication/RiderApplicationReviewPage"
 
 
 import ShiftCreatePage from "main/pages/Shift/ShiftCreatePage";
@@ -72,6 +73,9 @@ function App() {
         }
         {
           (hasRole(currentUser, "ROLE_ADMIN") )&& <Route exact path="/admin/applications/riders" element={<RiderApplicationIndexPageAdmin />} />
+        }
+        {
+          (hasRole(currentUser, "ROLE_ADMIN") )&& <Route exact path="/admin/applications/riders/review/:id" element={<RiderApplicationReviewPage />} />
         }
         {  
           (hasRole(currentUser, "ROLE_DRIVER") || hasRole(currentUser, "ROLE_USER")) && (
