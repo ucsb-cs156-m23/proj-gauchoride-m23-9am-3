@@ -10,6 +10,7 @@ import RiderApplicationTable from "main/components/RiderApplication/RiderApplica
 export default function RiderApplicationIndexPage() {
 
     const currentUser = useCurrentUser();
+
     // Stryker disable all
     const currentUserCopy = currentUser.data?.root?.rolesList
         ? {
