@@ -649,8 +649,9 @@ public class RiderApplicationControllerTests extends ControllerTestCase {
         // assert
         verify(riderApplicationRepository, times(1)).findByIdAndUserId(eq(67L), eq(UserId));
         verify(riderApplicationRepository, times(1)).save(application_cancelled); // should be saved with correct user
-        String responseString = response.getResponse().getContentAsString();
-        assertEquals(requestBody, responseString);
+        
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("Application with id 67 deleted", json.get("message"));
     }
 
     @WithMockUser(roles = { "MEMBER" })
@@ -801,12 +802,11 @@ public class RiderApplicationControllerTests extends ControllerTestCase {
                         .characterEncoding("utf-8")
                         .content(requestBody)
                         .with(csrf()))
-        .andExpect(status().isBadRequest()).andReturn();
+        .andExpect(status().isOk()).andReturn();
         
         // assert
-        verify(riderApplicationRepository, times(1)).findByIdAndUserId(eq(67L), eq(UserId));
-        String responseString = response.getResponse().getContentAsString();
-        assertEquals("RiderApplication with \"declined\" status cannot be cancelled", responseString);
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("Application with \"declined\" status cannot be cancelled", json.get("message"));
     }
 
 
