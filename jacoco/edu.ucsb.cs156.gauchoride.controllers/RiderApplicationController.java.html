@@ -132,7 +132,7 @@ import java.util.List;
     @Operation(summary = &quot;Cancel an existing rider application but only if it is owned by the current user and the application is in the correct status&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_MEMBER')&quot;)
     @PutMapping(&quot;/riderApplication/cancel&quot;)
-    public ResponseEntity&lt;Object&gt; cancelApplication(
+    public Object cancelApplication(
                             @Parameter(name=&quot;id&quot;, description=&quot;long, Id of the Application to be edited&quot;, 
                             required = true)
                             @RequestParam Long id)
@@ -154,12 +154,11 @@ import java.util.List;
 <span class="fc" id="L154">            application.setCancelled_date(currentDate);</span>
 <span class="fc" id="L155">            riderApplicationRepository.save(application);</span>
 
-<span class="fc" id="L157">            return ResponseEntity.ok(application);</span>
+<span class="fc" id="L157">            return genericMessage(&quot;Application with id %s is deleted&quot;.formatted(id));</span>
         }
         else
         {
-<span class="fc" id="L161">            String errorMessage = &quot;RiderApplication with \&quot;&quot; + application.getStatus() + &quot;\&quot; status cannot be cancelled&quot;;</span>
-<span class="fc" id="L162">            return ResponseEntity.badRequest().body(errorMessage);</span>
+<span class="fc" id="L161">            return genericMessage(&quot;Application with \&quot;%s\&quot; status cannot be cancelled&quot;.formatted(application.getStatus()));</span>
         }
     };
 
@@ -172,8 +171,8 @@ import java.util.List;
     public Iterable&lt;RiderApplication&gt; allApplicationsAdmin()
     {
         Iterable&lt;RiderApplication&gt; applications;
-<span class="fc" id="L175">        applications = riderApplicationRepository.findAll();</span>
-<span class="fc" id="L176">        return applications;</span>
+<span class="fc" id="L174">        applications = riderApplicationRepository.findAll();</span>
+<span class="fc" id="L175">        return applications;</span>
     };
 
     @Operation(summary = &quot;Get all pending rider applications&quot;)
@@ -182,9 +181,9 @@ import java.util.List;
     public Iterable&lt;RiderApplication&gt; allPendingApplications()
     {
         Iterable&lt;RiderApplication&gt; pendingApplications;
-<span class="fc" id="L185">        pendingApplications = riderApplicationRepository.findAllByStatus(&quot;pending&quot;);</span>
+<span class="fc" id="L184">        pendingApplications = riderApplicationRepository.findAllByStatus(&quot;pending&quot;);</span>
 
-<span class="fc" id="L187">        return pendingApplications;</span>
+<span class="fc" id="L186">        return pendingApplications;</span>
     };
 
     @Operation(summary = &quot;Get a specific rider application&quot;)
@@ -196,9 +195,9 @@ import java.util.List;
                             @RequestParam Long id)
     {
         RiderApplication application;
-<span class="fc" id="L199">        application = riderApplicationRepository.findById(id)</span>
-<span class="fc" id="L200">                .orElseThrow(() -&gt; new EntityNotFoundException(RiderApplication.class, id));</span>
-<span class="fc" id="L201">        return application;</span>
+<span class="fc" id="L198">        application = riderApplicationRepository.findById(id)</span>
+<span class="fc" id="L199">                .orElseThrow(() -&gt; new EntityNotFoundException(RiderApplication.class, id));</span>
+<span class="fc" id="L200">        return application;</span>
     };
 
     @Operation(summary = &quot;Update the status/notes field of an application&quot;)
@@ -218,21 +217,21 @@ import java.util.List;
                             @RequestParam String notes)
     {
         RiderApplication application;
-<span class="fc" id="L221">        application = riderApplicationRepository.findById(id)</span>
-<span class="fc" id="L222">                .orElseThrow(() -&gt; new EntityNotFoundException(RiderApplication.class, id));</span>
+<span class="fc" id="L220">        application = riderApplicationRepository.findById(id)</span>
+<span class="fc" id="L221">                .orElseThrow(() -&gt; new EntityNotFoundException(RiderApplication.class, id));</span>
 
-<span class="fc bfc" id="L224" title="All 2 branches covered.">        if (!status.isEmpty())</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">        if (!status.isEmpty())</span>
         {
-<span class="fc" id="L226">            application.setStatus(status);</span>
+<span class="fc" id="L225">            application.setStatus(status);</span>
         }
 
-<span class="fc bfc" id="L229" title="All 2 branches covered.">        if (!notes.isEmpty())</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">        if (!notes.isEmpty())</span>
         {
-<span class="fc" id="L231">            application.setNotes(notes);</span>
+<span class="fc" id="L230">            application.setNotes(notes);</span>
         }      
         
-<span class="fc" id="L234">        riderApplicationRepository.save(application);</span>
-<span class="fc" id="L235">        return application;</span>
+<span class="fc" id="L233">        riderApplicationRepository.save(application);</span>
+<span class="fc" id="L234">        return application;</span>
     };
 
 }
