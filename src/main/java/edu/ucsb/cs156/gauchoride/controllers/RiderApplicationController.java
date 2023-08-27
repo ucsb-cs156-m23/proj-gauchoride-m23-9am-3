@@ -132,7 +132,7 @@ public class RiderApplicationController extends ApiController {
     @Operation(summary = "Cancel an existing rider application but only if it is owned by the current user and the application is in the correct status")
     @PreAuthorize("hasRole('ROLE_MEMBER')")
     @PutMapping("/riderApplication/cancel")
-    public ResponseEntity<Object> cancelApplication(
+    public Object cancelApplication(
                             @Parameter(name="id", description="long, Id of the Application to be edited", 
                             required = true)
                             @RequestParam Long id)
@@ -154,12 +154,11 @@ public class RiderApplicationController extends ApiController {
             application.setCancelled_date(currentDate);
             riderApplicationRepository.save(application);
 
-            return ResponseEntity.ok(application);
+            return genericMessage("Application with id %s is deleted".formatted(id));
         }
         else
         {
-            String errorMessage = "RiderApplication with \"" + application.getStatus() + "\" status cannot be cancelled";
-            return ResponseEntity.badRequest().body(errorMessage);
+            return genericMessage("Application with \"%s\" status cannot be cancelled".formatted(application.getStatus()));
         }
     };
 

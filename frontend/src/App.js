@@ -9,13 +9,14 @@ import RideRequestCreatePage from "main/pages/Ride/RideRequestCreatePage";
 import RideRequestEditPage from "main/pages/Ride/RideRequestEditPage";
 import RideRequestIndexPage from "main/pages/Ride/RideRequestIndexPage";
 import ShiftPage from "main/pages/ShiftPage";
+import RiderApplicationCreatePage from "main/pages/RiderApplication/RiderApplicationCreatePage";
+import RiderApplicationEditPageMember from "main/pages/RiderApplication/RiderApplicationEditPageMember";
+import RiderApplicationIndexPageMember from "main/pages/RiderApplication/RiderApplicationIndexPageMember";
+
 
 import ShiftCreatePage from "main/pages/Shift/ShiftCreatePage";
 import ShiftEditPage from "main/pages/Shift/ShiftEditPage";
 import ShiftIndexPage from "main/pages/Shift/ShiftIndexPage";
-
-
-
 
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
@@ -31,7 +32,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<HomePage />} />
-        <Route exact path="/profile" element={<ProfilePage />} />
+        {
+          hasRole(currentUser, "ROLE_USER") && <Route exact path="/profile" element={<ProfilePage />} />
+        }
         {
           hasRole(currentUser, "ROLE_ADMIN") && <Route exact path="/admin/users" element={<AdminUsersPage />} />
         }
@@ -53,10 +56,20 @@ function App() {
         {
           hasRole(currentUser, "ROLE_RIDER") && <Route exact path="/shift/list" element={<ShiftPage />} />
         }
+       
         {
-          hasRole(currentUser, "ROLE_USER")
+          (hasRole(currentUser, "ROLE_MEMBER") )&& <Route exact path="/apply/rider" element={<RiderApplicationIndexPageMember />} />
         }
         {
+          (hasRole(currentUser, "ROLE_MEMBER") )&& <Route exact path="/apply/rider/new" element={<RiderApplicationCreatePage />} />
+        }
+        {
+          (hasRole(currentUser, "ROLE_MEMBER") )&& <Route exact path="/apply/rider/show/:id" element={<RiderApplicationEditPageMember />} />
+        }
+        {
+          (hasRole(currentUser, "ROLE_MEMBER") )&& <Route exact path="/apply/rider/edit/:id" element={<RiderApplicationEditPageMember />} />
+        }
+        {  
           (hasRole(currentUser, "ROLE_DRIVER") || hasRole(currentUser, "ROLE_USER")) && (
             <>
               <Route exact path="/shift" element={<ShiftIndexPage />} />
@@ -71,11 +84,8 @@ function App() {
             </>
           )
         }
-        {
-          hasRole(currentUser, "ROLE_USER")
-        }
-        <Route exact path="/*" element={<PageNotFound />} />
         <Route exact path="/privacy" element={<PrivacyPolicy />} />
+        <Route exact path="/*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );

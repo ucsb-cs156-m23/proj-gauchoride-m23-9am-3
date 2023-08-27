@@ -569,5 +569,40 @@ describe("AppNavbar tests", () => {
 
     });
 
+    test("renders RiderApplicationMember links correctly for member", async () => {
+
+        const currentUser = currentUserFixtures.memberOnly;
+        const doLogin = jest.fn();
+
+        const { getByText } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <AppNavbar currentUser={currentUser} doLogin={doLogin} />
+                    </MemoryRouter>
+            </QueryClientProvider>
+        );
+        
+        await waitFor(() => expect(getByText("Welcome, Phill Conrad")).toBeInTheDocument());
+        await waitFor(() => expect(getByText("Apply to be a Rider")).toBeInTheDocument());      
+    });
+
+    test("not render RiderApplicationMember links for regular user", async () => {
+
+        const currentUser = currentUserFixtures.userOnly;
+        const doLogin = jest.fn();
+
+        const { getByText } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <AppNavbar currentUser={currentUser} doLogin={doLogin} />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+        
+        await waitFor(() => expect(getByText("Welcome, Phillip Conrad")).toBeInTheDocument());
+        const applyMenu = screen.queryByText("Apply to be a Rider");
+        expect(applyMenu).not.toBeInTheDocument();      
+    });
+
 });
 

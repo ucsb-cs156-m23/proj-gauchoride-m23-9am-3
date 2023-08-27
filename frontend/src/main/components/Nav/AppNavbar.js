@@ -97,6 +97,12 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                   </NavDropdown>
                 )
               }
+              {
+                hasRole(currentUser, "ROLE_MEMBER") && (
+                  <Nav.Link as={Link} to="/apply/rider">Apply to be a Rider</Nav.Link>
+                )
+              }
+
             </Nav>
 
             <Nav className="ml-auto">
