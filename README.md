@@ -4,8 +4,8 @@
 
 | Type | Link       | 
 |------|------------|
-| prod | <https://proj-gauchoride.dokku-04.cs.ucsb.edu/> | 
-| qa | <https://proj-gauchoride-qa.dokku-04.cs.ucsb.edu/>  | 
+| prod | <https://gauchoride.dokku-03.cs.ucsb.edu/> | 
+| qa | <https://gauchoride-qa.dokku-03.cs.ucsb.edu/>  | 
 
 
 
